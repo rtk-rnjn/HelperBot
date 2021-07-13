@@ -156,15 +156,5 @@ class ult(Cog, name="utilities"):
 		await ctx.reply(embed=embed)
 
 
-	@commands.command()
-	@commands.bot_has_permissions(embed_links=True)
-	async def invite(self, ctx: Context):
-		"""
-		Get the invite of the bot! Thanks for seeing this command
-		"""
-		em = discord.Embed(title="ADD ME IN YOUR SERVER", url="https://discord.com/api/oauth2/authorize?client_id=800780974274248764&permissions=0&scope=bot", timestamp=datetime.utcnow())
-		em.set_footer(text=f"{ctx.author.name}")
-		await ctx.reply(embed=em)
-
 def setup(bot):
 	bot.add_cog(ult(bot))

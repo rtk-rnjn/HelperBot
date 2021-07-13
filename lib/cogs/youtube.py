@@ -22,19 +22,17 @@ class YouTube(Cog, name='youtube'):
                     if response.status == 200:
                         res = await response.json()
                         return res
+        
         match = re.search(r"[a-zA-Z0-9_-]{1,}", arg)
         if match:
             _id = match
-            url = f"https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id={_id}&key={KEY}"
+            url = f"https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id={arg}&key={KEY}"
             async with aiohttp.ClientSession() as session:
                 async with session.get(url) as response:
                     if response.status == 200:
                         res = await response.json()
                         return res
-                    else:
-                        return {}
 
-            return {'success': False, 'id': arg}
 
     @commands.command(aliases=['subs', 'subscriber'])
     @commands.guild_only()
@@ -42,8 +40,8 @@ class YouTube(Cog, name='youtube'):
         """To get the sub count of a given URL"""
         channel = await self.channel_converter(channel)
 
-        try:
-            _ = channel['success']
+        try: channel['items']
+        except KeyError:
             embed = discord.Embed(
                 title='Hmm...!',
                 description=
@@ -55,24 +53,28 @@ class YouTube(Cog, name='youtube'):
                 f'Requested by: {ctx.author.name}#{ctx.author.discriminator}',
                 icon_url=ctx.author.avatar_url)
             return await ctx.send(content=f"{ctx.author.mention}", embed=embed)
-        except Exception:
-            pass
+        
         embed = discord.Embed(
             title=channel['items'][0]['snippet']['title'],
             description=
             f"```\n{channel['items'][0]['snippet']['description']}\n```",
             color=ctx.author.color,
-            timestamp=datetime.utcnow())
+            timestamp=datetime.utcnow()) 
         embed.set_thumbnail(
-            url=f"{channel['items'][0]['snippet']['thumbnails']['medium']}")
+            url=f"{channel['items'][0]['snippet']['thumbnails']['default']['url']}")
         embed.set_footer(
             text=f'Requested by: {ctx.author.name}#{ctx.author.discriminator}',
             icon_url=ctx.author.avatar_url)
+        embed.add_field(name="View Count", value=f"{channel['items'][0]['statistics']['viewCount']}", inline=True)
+        embed.add_field(name="Sub Count", value=f"{channel['items'][0]['statistics']['subscriberCount']}", inline=True)
+        embed.add_field(name="Video Count", value=f"{channel['items'][0]['statistics']['videoCount']}", inline=True)
+        embed.add_field(name="Country", value=f"{channel['items'][0]['snippet']['country']}", inline=True)
+
         await ctx.send(content=f"{ctx.author.mention}", embed=embed)
 
     @commands.command(aliases=['yt'])
     async def youtube(self, ctx: Context, *, query: str):
-        results = youtube_search.YoutubeSearch(query, max_results=5).to_json()
+        results = await youtube_search.YoutubeSearch(query, max_results=5).to_json()
         main = json.loads(results)
 
         em_list = []

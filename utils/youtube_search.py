@@ -7,7 +7,7 @@ class YoutubeSearch:
     def __init__(self, search_terms: str, max_results=None):
         self.search_terms = search_terms
         self.max_results = max_results
-        self.videos = self._search()
+        
 
     async def _search(self):
         encoded_search = urllib.parse.quote_plus(self.search_terms)
@@ -23,7 +23,6 @@ class YoutubeSearch:
                 async with session.get(url) as response:
                     if response.status == 200:
                         response = await response.text()
-        print(response)
         results = self._parse_html(response)
         if self.max_results is not None and len(results) > self.max_results:
             return results[: self.max_results]
@@ -60,14 +59,10 @@ class YoutubeSearch:
                 results.append(res)
         return results
 
-    def to_dict(self, clear_cache=True):
-        result = self.videos
-        if clear_cache:
-            self.videos = ""
+    async def to_dict(self, clear_cache=True):
+        result = await self._search()
         return result
 
-    def to_json(self, clear_cache=True):
-        result = json.dumps({"videos": self.videos})
-        if clear_cache:
-            self.videos = ""
+    async def to_json(self, clear_cache=True):
+        result = json.dumps({"videos": await self._search()})
         return result
