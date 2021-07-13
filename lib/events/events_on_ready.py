@@ -2,7 +2,10 @@ import discord, asyncio, aiohttp
 from core import Cog, HelperBot
 from pytchat import LiveChatAsync
 from datetime import datetime
+import os
 
+channel1 = os.environ['CHANNEL_1']
+channel2 = os.environ['CHANNEL_2']
 
 class OnReady(Cog):
     def __init__(self, bot: HelperBot):
@@ -41,8 +44,8 @@ class OnReady(Cog):
                 ]
                 
                 for hook in [
-                        'https://discord.com/api/webhooks/864089656701485066/4FSi8EfR3WzwY729i2_bm8QF8SVfoEpukcMZAsg_yJcE9H5sHLeU6lZHxlMCBoYAjdpU',
-                        'https://discord.com/api/webhooks/864089652410318850/l9A8JqNXqTZrWDkkm5ow9kKGUf3gDc_Sp7POw96tSWFrdV3zDV_6421uZVjTsPXD9XfL'
+                        f'https://discord.com/api/webhooks/864089656701485066/{channel1}',
+                        f'https://discord.com/api/webhooks/864089652410318850/{channel2}'
                 ]:
                   async with aiohttp.ClientSession() as session:
                       async with session.post(hook, json=data) as response:
