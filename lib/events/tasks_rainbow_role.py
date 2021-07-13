@@ -1,5 +1,5 @@
 import discord
-from lib.core import HelperBot, Cog
+from core import HelperBot, Cog
 from discord.ext import tasks
 
 

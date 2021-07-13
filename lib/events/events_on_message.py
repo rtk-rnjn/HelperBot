@@ -1,5 +1,5 @@
-import disocrd
-from lib.core import Cog, HelperBot
+import discord
+from core import Cog, HelperBot
 
 
 class OnMessage(Cog):

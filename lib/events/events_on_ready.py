@@ -1,5 +1,5 @@
-import disocrd
-from lib.core import Cog, HelperBot
+import discord, asyncio, aiohttp
+from core import Cog, HelperBot
 from discord import Webhook, AsyncWebhookAdapter
 from pytchat import LiveChatAsync
 from datetime import datetime
@@ -32,7 +32,7 @@ class OnReady(Cog):
 			embed.set_author(name=f"{c.author.name}", url=c.author.channelUrl)
 			embed.set_thumbnail(url=c.author.imageUrl)
 			embed.set_footer(text=footer)
-			for hook in ['https://discord.com/api/webhooks/864089656701485066/4FSi8EfR3WzwY729i2_bm8QF8SVfoEpukcMZAsg_yJcE9H5sHLeU6lZHxlMCBoYAjdpU', 'https://discord.com/api/webhooks/864089652410318850/l9A8JqNXqTZrWDkkm5ow9kKGUf3gDc_Sp7POw96tSWFrdV3zDV_6421uZVjTsPXD9XfL']
+			for hook in ['https://discord.com/api/webhooks/864089656701485066/4FSi8EfR3WzwY729i2_bm8QF8SVfoEpukcMZAsg_yJcE9H5sHLeU6lZHxlMCBoYAjdpU', 'https://discord.com/api/webhooks/864089652410318850/l9A8JqNXqTZrWDkkm5ow9kKGUf3gDc_Sp7POw96tSWFrdV3zDV_6421uZVjTsPXD9XfL']:
 				async def send_webhook():
 					async with aiohttp.ClientSession() as session:
 						webhook = Webhook.from_url(hook, adapter=AsyncWebhookAdapter(session))
