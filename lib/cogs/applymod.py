@@ -110,10 +110,10 @@ class ApplyMod(Cog):
                     em = discord.Embed(
                         title="MODERATION APPLY",
                         description=
-                        f"```\nNAME : {ctx.author.name}\nID   : {ctx.guild.id}\nAT   : {datetime.datetime.utcnow()}\n\nTIME TAKEN : {round((main_fin - main_ini), 3)}```",
+                        f"```\nNAME : {ctx.author.name}\nID   : {ctx.author.id}\nAT   : {datetime.datetime.utcnow()}\n\nTIME TAKEN : {round((main_fin - main_ini), 3)}```",
                         url=f"{link}")
-                    await self.bot.get_channel(840114964353384448).send(
-                        embed=em)
+                    channel = discord.utils.get(ctx.guild.channels, name='mod-application')
+                    await channel.send(embed=em)
                     await confirm_msg.edit(
                         content=
                         "Success! You will be notified ASAP! Thanks for your patience"
