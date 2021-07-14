@@ -5,16 +5,16 @@ from utils.config import EXTENTIONS, TOKEN
 
 class HelperBot(commands.Bot):
     def __init__(self, *args, **kwargs):
-        super().__init__(
-            command_prefix=self.get_prefix,
-            case_insensitive=False,
-            intents=discord.Intents.all(),
-            strip_after_prefix=True,
-            activity=discord.Activity(type=discord.ActivityType.listening,
-                                      name="Parrot"),
-            status=discord.Status.idle,
-            **kwargs)
-        
+        super().__init__(command_prefix=self.get_prefix,
+                         case_insensitive=False,
+                         intents=discord.Intents.all(),
+                         strip_after_prefix=True,
+                         activity=discord.Activity(
+                             type=discord.ActivityType.listening,
+                             name="Parrot"),
+                         status=discord.Status.idle,
+                         **kwargs)
+
         for ext in EXTENTIONS:
             try:
                 self.load_extension(ext)
@@ -26,11 +26,13 @@ class HelperBot(commands.Bot):
 
     def run(self):
         super().run(TOKEN, reconnect=True)
-    
+
     async def on_ready(self):
-        print(f"[HelperBot] {self.user.name}#{self.user.discriminator} ready to take commands")
+        print(
+            f"[HelperBot] {self.user.name}#{self.user.discriminator} ready to take commands"
+        )
 
     async def get_prefix(self, message: discord.Message) -> str:
-      if not message.guild: return
-      if message.guild.id != 741614680652644382: return
-      return commands.when_mentioned_or('H!', 'h!')(self, message)
+        if not message.guild: return
+        if message.guild.id != 741614680652644382: return
+        return commands.when_mentioned_or('H!', 'h!')(self, message)

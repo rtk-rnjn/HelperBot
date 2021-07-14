@@ -8,7 +8,8 @@ EXTENTIONS = [
     'lib.cogs.applymod',
     'lib.events.events_on_message',
     'lib.events.events_on_ready',
-    'lib.events.events_cmd_error'
+    'lib.events.events_cmd_error',
+    'lib.cogs.tag'
     #'lib.events.tasks_rainbow_role',
 ]
 GOOGLE_KEY = os.environ['GOOGLE_KEY']
