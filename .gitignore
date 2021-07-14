@@ -1,4 +1,3 @@
-
 __pycache__/
 *$py.class
 
@@ -10,3 +9,5 @@ ENV/
 env.bak/
 venv.bak/
 
+# personal data
+data/
