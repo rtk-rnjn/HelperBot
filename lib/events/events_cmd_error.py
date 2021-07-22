@@ -1,11 +1,12 @@
+# -*- coding: utf-8 -*-
+
 import discord, traceback, sys, math, random
 from discord.ext import commands
 from datetime import datetime
 
 from core import HelperBot, Context, Cog
 
-
-with open("data/quotes.txt") as f:
+with open("data/quotes.txt", encoding='utf-8') as f:
     quote = f.read()
 
 quote = quote.split('\n')
@@ -39,11 +40,6 @@ class Cmd(Cog):
                 fmt = ' and '.join(missing)
             _message = f'{random.choice(quote)}\n\nBot Missing permissions. Please provide the following permission(s) to the bot.```\n{fmt}```'
             return await ctx.send(_message)
-
-        elif isinstance(error, commands.DisabledCommand):
-            return await ctx.send(
-                f'{random.choice(quote)}\n\n{ctx.author.mention} this command has been disabled. Consider asking your Server Manager to fix this out!'
-            )
 
         elif isinstance(error, commands.CommandOnCooldown):
             return await ctx.send(
@@ -148,18 +144,10 @@ class Cmd(Cog):
             return await ctx.send(
                 f"{random.choice(quote)}\n\nMax Concurrenry Reached. This command is already running in this server. You have wait for it to finish."
             )
-        elif isinstance(error, commands.CheckAnyFailure):
-            return await ctx.send(', or '.join(
-                [error.__str__().format(ctx=ctx) for error in error.errors]))
-
 
         else:
-            print('Ignoring exception in command {}:'.format(ctx.command))
+            await ctx.send('**REPORT THIS TO DEV**\n\nIgnoring exception in command {}:\n{}'.format(ctx.command, traceback.format_exc()))
 
-            traceback.print_exception(type(error),
-                                      error,
-                                      error.__traceback__,
-                                      file=sys.stderr)
 
 def setup(bot):
     bot.add_cog(Cmd(bot))

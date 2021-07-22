@@ -3,7 +3,7 @@ import discord, asyncio, time, datetime, aiohttp, json
 
 from core import HelperBot, Context, Cog
 
-with open('data/question.txt') as f:
+with open('data/questions.json') as f:
   questions = json.load(f)
 
 class ApplyMod(Cog):
@@ -18,7 +18,7 @@ class ApplyMod(Cog):
         """
         Want mod? Consider asking us out!
         """
-        return await ctx.send("Mod application are closed for the time being")
+        #return await ctx.send("Mod application are closed for the time being")
         await ctx.send(f"{ctx.author.mention} check your DM!", delete_after=3)
 
         try:

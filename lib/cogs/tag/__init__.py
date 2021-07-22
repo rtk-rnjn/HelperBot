@@ -85,18 +85,18 @@ class Tags(Cog):
     @tag.command(name='show')
     async def show_tag(self, ctx: Context, name: commands.clean_content):
         """To show the tag"""
-        async with ctx.channel.typing:
-            conn = sqlite3.connect('data/db.db')
-            cursor = conn.cursor()
-            try:
-              data = cursor.execute(f'''SELECT * FROM tags WHERE name={name}''')
-              for data in data:
-                  if not data: return 
-                  else:
-                    await ctx.send(f"{data[-1]}")
-            except Exception as e:
-                await ctx.send(f'{e}')
-            conn.close()
+        await ctx.message.delete()
+        conn = sqlite3.connect('data/db.db')
+        cursor = conn.cursor()
+        try:
+          data = cursor.execute(f'''SELECT * FROM tags WHERE name="{name}"''')
+          for data in data:
+              if not data: return 
+              else:
+                await ctx.send(f"{data[-1]}")
+        except Exception as e:
+            await ctx.send(f'{e}')
+        conn.close()
   
 def setup(bot):
     bot.add_cog(Tags(bot))
