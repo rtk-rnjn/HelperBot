@@ -24,6 +24,8 @@ class ChannelBow(Cog):
         await asyncio.sleep(5)
         channel = self.bot.get_channel(796645162860150784)
         await channel.edit(name=f"│💬│{choice(adj)}-general", reason=f"Action featured by !! Ritik Ranjan [*.*]")
+        msg = channel.last_message
+        if msg.author.id == self.bot.user.id: return
         await channel.send(f"{choice(topic)}")
 
 
