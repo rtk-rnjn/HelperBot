@@ -1,6 +1,6 @@
 import os
 
-TOKEN = os.getenv('TOKEN')
+TOKEN = os.environ['TOKEN']
 EXTENTIONS = [
     'jishaku',
     'lib.cogs.youtube',
