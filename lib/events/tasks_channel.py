@@ -19,7 +19,7 @@ class ChannelBow(Cog):
         self.bot = bot
         self.ChannelBow.start()
 
-    @tasks.loop(seconds=300)
+    @tasks.loop(seconds=7200)
     async def ChannelBow(self):
         await asyncio.sleep(5)
         channel = self.bot.get_channel(796645162860150784)
