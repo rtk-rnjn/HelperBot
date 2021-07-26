@@ -5,3 +5,5 @@ psutil
 pytchat
 Flask
 PyNaCl
+pymongo
+dnspython
