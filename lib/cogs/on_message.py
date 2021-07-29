@@ -1,4 +1,4 @@
-from lib import HelperBot, Cog
+from core import HelperBot, Cog
 import asyncio
 from random import choice
 
