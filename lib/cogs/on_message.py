@@ -21,9 +21,9 @@ class OnMessage(Cog):
 
         if message.content.lower() == "!d bump":
             try:
-                msg_em = self.bot.wait_for('message',
-                                           timeout=10.0,
-                                           check=check)
+                msg_em = await self.bot.wait_for('message',
+                                                 timeout=10.0,
+                                                 check=check)
             except Exception:
                 return
 
