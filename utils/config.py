@@ -12,5 +12,6 @@ EXTENTIONS = [
     'lib.cogs.tag',
     'lib.events.tasks_rainbow_role',
     'lib.events.tasks_channel',
+    'lib.cogs.on_message',
 ]
 GOOGLE_KEY = os.environ['GOOGLE_KEY']
