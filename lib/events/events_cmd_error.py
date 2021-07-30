@@ -24,12 +24,12 @@ class Cmd(Cog):
         # get the original exception
         error = getattr(error, 'original', error)
 
-        ignore = (commands.CommandNotFound, discord.Forbidden,
-                  discord.errors.NotFound)
+        # ignore = (commands.CommandNotFound, discord.Forbidden,
+        #           discord.errors.NotFound)
 
-        if isinstance(error, ignore): return
+        # if isinstance(error, ignore): return
 
-        elif isinstance(error, commands.BotMissingPermissions):
+        if isinstance(error, commands.BotMissingPermissions):
             missing = [
                 perm.replace('_', ' ').replace('guild', 'server').title()
                 for perm in error.missing_perms
