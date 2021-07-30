@@ -20,14 +20,14 @@ class Cmd(Cog):
     async def on_command_error(self, ctx: Context, error):
         # if command has local error handler, return
         if hasattr(ctx.command, 'on_error'): return
-
+        exception = error
         # get the original exception
         error = getattr(error, 'original', error)
 
-        # ignore = (commands.CommandNotFound, discord.Forbidden,
-        #           discord.errors.NotFound)
+        ignore = (commands.CommandNotFound, discord.Forbidden,
+                  discord.errors.NotFound)
 
-        # if isinstance(error, ignore): return
+        if isinstance(error, ignore): return
 
         if isinstance(error, commands.BotMissingPermissions):
             missing = [
@@ -146,8 +146,8 @@ class Cmd(Cog):
             )
 
         else:
-            await ctx.send('**REPORT THIS TO DEV**\n\nIgnoring exception in command {}:\n{}'.format(ctx.command, traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)))
-            traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
+            await ctx.send('**REPORT THIS TO DEV**\n\nIgnoring exception in command {}:\n{}'.format(ctx.command.name, str(exception)))
+            
 
 
 def setup(bot):
