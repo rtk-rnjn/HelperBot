@@ -146,7 +146,8 @@ class Cmd(Cog):
             )
 
         else:
-            await ctx.send('**REPORT THIS TO DEV**\n\nIgnoring exception in command {}:\n{}'.format(ctx.command, traceback.format_exc()))
+            await ctx.send('**REPORT THIS TO DEV**\n\nIgnoring exception in command {}:\n{}'.format(ctx.command, traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)))
+            traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
 
 
 def setup(bot):

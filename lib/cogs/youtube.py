@@ -51,7 +51,7 @@ class YouTube(Cog, name='youtube'):
             embed.set_footer(
                 text=
                 f'Requested by: {ctx.author.name}#{ctx.author.discriminator}',
-                icon_url=ctx.author.avatar_url)
+                icon_url=ctx.author.avatar.url)
             return await ctx.send(content=f"{ctx.author.mention}", embed=embed)
         
         embed = discord.Embed(
@@ -64,7 +64,7 @@ class YouTube(Cog, name='youtube'):
             url=f"{channel['items'][0]['snippet']['thumbnails']['default']['url']}")
         embed.set_footer(
             text=f'Requested by: {ctx.author.name}#{ctx.author.discriminator}',
-            icon_url=ctx.author.avatar_url)
+            icon_url=ctx.author.avatar.url)
         embed.add_field(name="View Count", value=f"{channel['items'][0]['statistics']['viewCount']}", inline=True)
         embed.add_field(name="Sub Count", value=f"{channel['items'][0]['statistics']['subscriberCount']}", inline=True)
         embed.add_field(name="Video Count", value=f"{channel['items'][0]['statistics']['videoCount']}", inline=True)
@@ -106,7 +106,7 @@ class YouTube(Cog, name='youtube'):
             embed.set_footer(
                 text=
                 f'Requested by: {ctx.author.name}#{ctx.author.discriminator}',
-                icon_url=ctx.author.avatar_url)
+                icon_url=ctx.author.avatar.url)
             em_list.append(embed)
 
         _paginator = paginator.Paginator(pages=em_list, timeout=60.0)
