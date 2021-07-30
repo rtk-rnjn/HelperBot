@@ -146,7 +146,7 @@ class Cmd(Cog):
             )
 
         else:
-            await ctx.send('**REPORT THIS TO DEV**\n\nIgnoring exception in command {}:\n{}'.format(ctx.command.name, str(exception)))
+            await ctx.send('**REPORT THIS TO DEV**\n\nIgnoring exception in command {}: {}'.format(ctx.command.name, str(exception)))
             
 
 
