@@ -20,7 +20,7 @@ class Cmd(Cog):
     async def on_command_error(self, ctx: Context, error):
         # if command has local error handler, return
         if hasattr(ctx.command, 'on_error'): return
-        exception = error
+        
         # get the original exception
         error = getattr(error, 'original', error)
 
@@ -146,9 +146,10 @@ class Cmd(Cog):
             )
 
         else:
-            await ctx.send('**REPORT THIS TO DEV**\n\nIgnoring exception in command {}: {}'.format(ctx.command.name, str(exception)))
+            tb = traceback.format_exception(type(error), error, error.__traceback__)
+            tbe = "".join(tb) + ""
+            await ctx.send('**REPORT THIS TO DEV**\n\nIgnoring exception in command {}: {}'.format(ctx.command.name, tbe))
             
-
 
 def setup(bot):
     bot.add_cog(Cmd(bot))
