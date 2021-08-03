@@ -18,7 +18,7 @@ class OnMessageMod(Cog):
         if retry_after:
             await message.channel.send("rate limited 1") # rate limited
         else:
-            await message.channel.send("rate limited 2") # not rate limited
+            pass #await message.channel.send("rate limited 2") # not rate limited
         if self.channel is None:
             self.channel = self.bot.get_channel(837637146453868554)
 
