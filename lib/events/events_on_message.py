@@ -7,7 +7,7 @@ class OnMessageMod(Cog):
     def __init__(self, bot: HelperBot):
         self.bot = bot
         self.channel = None
-        self.cd_mapping = commands.CooldownMapping.from_cooldown(10, 10, commands.BucketType.member)
+        self.cd_mapping = commands.CooldownMapping.from_cooldown(5, 5, commands.BucketType.member)
 
     @Cog.listener()
     async def on_message(self, message):
@@ -16,9 +16,9 @@ class OnMessageMod(Cog):
         bucket = self.cd_mapping.get_bucket(message)
         retry_after = bucket.update_rate_limit()
         if retry_after:
-            await message.channel.send("rate limited") # rate limited
+            await message.channel.send("rate limited 1") # rate limited
         else:
-            pass # not rate limited
+            await message.channel.send("rate limited 2") # not rate limited
         if self.channel is None:
             self.channel = self.bot.get_channel(837637146453868554)
 
