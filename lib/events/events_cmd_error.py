@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import discord, traceback, sys, math, random
+import discord, traceback, math, random, aiohttp
 from discord.ext import commands
 from datetime import datetime
 
@@ -15,6 +15,25 @@ class Cmd(Cog):
     """This category is of no use for you, ignore it."""
     def __init__(self, bot: HelperBot):
         self.bot = bot
+
+    async def paste(self, text):
+        """Return an online bin of given text"""
+
+        async with aiohttp.ClientSession() as aioclient:
+            post = await aioclient.post('https://hastebin.com/documents',
+                                        data=text)
+            if post.status == 200:
+                response = await post.text()
+                return f'https://hastebin.com/{response[8:-2]}'
+
+            # Rollback bin
+            post = await aioclient.post("https://bin.readthedocs.fr/new",
+                                        data={
+                                            'code': text,
+                                            'lang': 'python'
+                                        })
+            if post.status == 200:
+                return post.url
 
     @Cog.listener()
     async def on_command_error(self, ctx: Context, error):
@@ -148,7 +167,10 @@ class Cmd(Cog):
         else:
             tb = traceback.format_exception(type(error), error, error.__traceback__)
             tbe = "".join(tb) + ""
-            await ctx.send('**REPORT THIS TO DEV**\n\nIgnoring exception in command {}: {}'.format(ctx.command.name, tbe))
+            if len(tbe) < 1800:
+              await ctx.send('Copy paste this error to `!! Ritik Ranjan [*.*]#9230`\n\n```py\nIgnoring exception in command {}: {}\n```'.format(ctx.command.name, tbe))
+            else: 
+                await ctx.send(f"Give this link to `!! Ritik Ranjan [*.*]#9230`\n{self.paste(tbe)}")
             
 
 def setup(bot):

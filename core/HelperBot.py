@@ -2,6 +2,12 @@ from discord.ext import commands
 import discord, traceback, jishaku
 from utils.config import EXTENTIONS, TOKEN
 
+import os
+
+os.environ["JISHAKU_HIDE"] = "True"
+os.environ["JISHAKU_NO_UNDERSCORE"] = "True"
+os.environ["JISHAKU_NO_DM_TRACEBACK"] = "True"
+
 
 class HelperBot(commands.Bot):
     def __init__(self, *args, **kwargs):

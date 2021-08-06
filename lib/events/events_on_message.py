@@ -13,12 +13,7 @@ class OnMessageMod(Cog):
     async def on_message(self, message):
         await self.bot.wait_until_ready()
         if message.author.bot: return
-        bucket = self.cd_mapping.get_bucket(message)
-        retry_after = bucket.update_rate_limit()
-        if retry_after:
-            await message.channel.send("rate limited 1") # rate limited
-        else:
-            pass #await message.channel.send("rate limited 2") # not rate limited
+        
         if self.channel is None:
             self.channel = self.bot.get_channel(837637146453868554)
 
@@ -26,6 +21,13 @@ class OnMessageMod(Cog):
             await self.channel.send(
                 f"**{message.author.name}#{message.author.discriminator} ({message.author.id})**: {message.content}"
             )
+
+        bucket = self.cd_mapping.get_bucket(message)
+        retry_after = bucket.update_rate_limit()
+        if retry_after:
+            return await message.channel.send("Rate limited is being hit") 
+        else:
+            pass 
 
         if message.channel is self.channel:
             if str(message.content).startswith('<'):
