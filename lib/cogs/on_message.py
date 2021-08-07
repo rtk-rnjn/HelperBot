@@ -9,7 +9,7 @@ with open("data/quotes.txt") as f:
 class OnMessage(Cog):
     def __init__(self, bot: HelperBot):
         self.bot = bot
-        self.channel = self.bot.get_channel(836874738609553459)
+        self.channel = self.bot.get_channel(796645162860150784)
 
     @Cog.listener()
     async def on_message(self, message):
@@ -17,7 +17,7 @@ class OnMessage(Cog):
         if message.channel.id != 836874738609553459: return
         
         if self.channel is None:
-            self.channel = self.bot.get_channel(836874738609553459)
+            self.channel = self.bot.get_channel(796645162860150784)
 
         def check(m):
             return m.author.id == 302050872383242240
