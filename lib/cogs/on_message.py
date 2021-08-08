@@ -9,15 +9,11 @@ with open("data/quotes.txt") as f:
 class OnMessage(Cog):
     def __init__(self, bot: HelperBot):
         self.bot = bot
-        self.channel = self.bot.get_channel(796645162860150784)
 
     @Cog.listener()
     async def on_message(self, message):
         if not message.guild: return
         if message.channel.id != 836874738609553459: return
-        
-        if self.channel is None:
-            self.channel = self.bot.get_channel(796645162860150784)
 
         def check(m):
             return m.author.id == 302050872383242240
@@ -34,8 +30,8 @@ class OnMessage(Cog):
                 des = msg_em.embeds[0].description
                 if "bump done" in des.lower():
                     await asyncio.sleep(60 * 60 * 2)
-                    await self.channel.send(
-                        f"**{choice(quotes)}**\n\nBump Us at: {self.channel.mention}"
+                    await self.bot.get_channel(796645162860150784).send(
+                        f"**{choice(quotes)}**\nBump Us at: <#836874738609553459>"
                     )
 
 
