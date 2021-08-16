@@ -40,5 +40,5 @@ class HelperBot(commands.Bot):
 
     async def get_prefix(self, message: discord.Message) -> str:
         if not message.guild: return ""
-        if message.guild.id != 741614680652644382: return
+        if message.guild.id != 741614680652644382: return ""
         return commands.when_mentioned_or('H!', 'h!')(self, message)

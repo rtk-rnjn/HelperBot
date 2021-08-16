@@ -10,7 +10,7 @@ EXTENTIONS = [
     'lib.events.events_on_ready',
     'lib.events.events_cmd_error',
     'lib.events.events_on_join',
-    'lib.cogs.tag',
+    #'lib.cogs.tag',
     'lib.events.tasks_rainbow_role',
     'lib.events.tasks_channel',
     'lib.cogs.on_message',
