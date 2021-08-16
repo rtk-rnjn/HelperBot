@@ -45,7 +45,7 @@ class YouTube(Cog, name='youtube'):
             embed = discord.Embed(
                 title='Hmm...!',
                 description=
-                f"```\nCHANNEL YOU ARE LOOKING FOR WITH ID: {channel['id']} DO NOT EXISTS\n```",
+                f"```ini\n[CHANNEL YOU ARE LOOKING FOR DO NOT EXISTS]\n```",
                 color=ctx.author.color,
                 timestamp=datetime.utcnow())
             embed.set_footer(
