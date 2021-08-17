@@ -1,4 +1,4 @@
-import discord, re
+import discord, re, aiohttp
 from discord.ext import commands
 from core import Cog, HelperBot
 
