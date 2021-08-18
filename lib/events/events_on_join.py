@@ -1,7 +1,7 @@
 from core import HelperBot, Cog
 from discord import Embed 
 from discord.utils import get
-from discord.ext import task
+from discord.ext import tasks
 
 class OnJoin(Cog):
     def __init__(self, bot: HelperBot):
@@ -19,6 +19,7 @@ class OnJoin(Cog):
             current_count = get(await member.guild.invites(), code="NEyJxM7G7f").uses
             if (current_count - 1) == self.invite_count:
                 await member.add_roles(self.inv, reason="Joined from Either Stream or Support")
+                self.invite_count = current_count
             created = member.created_at
             today = member.joined_at
 
@@ -29,8 +30,7 @@ class OnJoin(Cog):
             embed = Embed(
                 title=
                 f"{member.name}#{member.discriminator} welcome to {member.guild.name}",
-                description=
-                "We glad to see you here. Check out <#785803322136592394> and enjoy!",
+                description="We glad to see you here. Check out <#785803322136592394> and enjoy!",
                 timestamp=member.created_at)
             embed.set_thumbnail(url=f"{member.avatar.url}")
             embed.add_field(
@@ -45,7 +45,7 @@ class OnJoin(Cog):
             else:
                 await member.add_roles(self.sus, reason="Suspecious Account")
     
-    @task.loop(count=1)
+    @tasks.loop(count=1)
     async def invite_counter(self):
         await self.bot.wait_until_ready()
         guild = self.bot.get_guild(741614680652644382)

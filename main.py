@@ -1,8 +1,6 @@
 from core import HelperBot
-from utils.keep_alive import keep_alive
-
-bot = HelperBot()
+# from utils.keep_alive import keep_alive
 
 if __name__ == '__main__':
-    keep_alive()
-    bot.run()
+    # keep_alive()
+    HelperBot().run()
