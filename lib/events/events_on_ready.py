@@ -22,19 +22,22 @@ class OnReady(Cog):
 
             async for c in data.async_items():
                 footer = "Normal User"
-
-                if c.author.isChatModerator: footer = "Chat Moderator"
-                if c.author.isChatOwner: footer = "Chat Owner"
+                color = 16777215
+                
+                if c.author.isChatModerator: 
+                    footer = "Chat Moderator"
+                    color = 3447003
+                if c.author.isChatOwner: 
+                    footer = "Chat Owner"
+                    color = 16705372
                 date_obj = datetime.strptime(c.datetime, "%Y-%m-%d %H:%M:%S")
 
                 data = {
-                    'username':
-                    "Beasty Stats",
-                    'avatar_url':
-                    "https://yt3.ggpht.com/ytc/AKedOLSsvX9K4ESvZt94SEKJg1Km6ufjYa_VUhbgXp6h=s176-c-k-c0x00ffffff-no-rj"
+                    'username': "Beasty Stats",
+                    'avatar_url': "https://yt3.ggpht.com/ytc/AKedOLSsvX9K4ESvZt94SEKJg1Km6ufjYa_VUhbgXp6h=s176-c-k-c0x00ffffff-no-rj"
                 }
                 data['embeds'] = [{
-                    'description': f"```\n{c.message}\n```",
+                    'description': f"{c.message}",
                     'timestamp': date_obj.isoformat(),
                     'author': {
                         'name': f"{c.author.name}",
@@ -46,6 +49,7 @@ class OnReady(Cog):
                     'footer': {
                         'text': footer
                     }
+                    'color': color 
                 }]
 
                 for hook in [

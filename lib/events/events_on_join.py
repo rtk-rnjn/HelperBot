@@ -19,7 +19,7 @@ class OnJoin(Cog):
             current_count = get(await member.guild.invites(), code="NEyJxM7G7f").uses
             if (current_count - 1) == self.invite_count:
                 await member.add_roles(self.inv, reason="Joined from Either Stream or Support")
-                self.invite_count = current_count
+
             created = member.created_at
             today = member.joined_at
 
@@ -39,11 +39,12 @@ class OnJoin(Cog):
                 f"```{timedelta[0]} Hr(s) {timedelta[1]} Min(s) {timedelta[2]} Sec(s)```",
                 inline=False)
             embed.set_footer(text=f"ID: {member.id}", icon_url=guild.icon.url)
-            await self.chanenl.send(embed=embed)
+            await self.channel.send(embed=embed)
 
             if (today - created).total_seconds() >= 86400: pass
             else:
                 await member.add_roles(self.sus, reason="Suspecious Account")
+        self.invite_counter.start()
     
     @tasks.loop(count=1)
     async def invite_counter(self):
