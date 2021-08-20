@@ -48,7 +48,7 @@ class OnReady(Cog):
                     },
                     'footer': {
                         'text': footer
-                    }
+                    },
                     'color': color 
                 }]
 
