@@ -11,6 +11,9 @@ class OnMessageMod(Cog):
     def __init__(self, bot: HelperBot):
         self.bot = bot
         self.channel = None
+        self.ignore_channel = {
+            803486169861586965: True, # spam-channel
+        }
         self.cd_mapping = commands.CooldownMapping.from_cooldown(
             10, 10, commands.BucketType.member)
     
@@ -52,7 +55,14 @@ class OnMessageMod(Cog):
         bucket = self.cd_mapping.get_bucket(message)
         retry_after = bucket.update_rate_limit()
         if retry_after:
-            return await message.channel.send("Rate limited is being hit")
+            if message.channel.id in self.ignore:
+                pass
+            else:
+                await message.channel.send("Channel Rate limit is close to get triggered. Locking for 10sec", delete_after=10.1)
+                await message.channel.edit(slowmode_delay=10, reason=f"Action featured by !! Ritik Ranjan [*.*] | Reason: 10 messages in less than 10 seconds")
+                await asyncio.sleep(10)
+                await message.channel.edit(slowmode_delay=0, reason=f"Action featured by !! Ritik Ranjan [*.*] | Reason: Slowmode Delay Expired")
+                await message.channel.send("Channel Unlocked. All OK", delete_after=2)
         else:
             pass
 
