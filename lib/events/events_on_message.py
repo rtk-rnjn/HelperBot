@@ -89,8 +89,7 @@ class OnMessageMod(Cog):
                     color=message.author.color,
                     timestamp=datetime.utcnow())
                 embed.set_footer(
-                    text=
-                    f'Requested by: {message.author.name}#{message.author.discriminator}',
+                    text=f'Requested by: {message.author.name}#{message.author.discriminator}',
                     icon_url=message.author.avatar.url)
                 return await thread.send(content=f"{message.author.mention}", embed=embed, delete_after=120)
             else:
