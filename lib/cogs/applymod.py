@@ -19,7 +19,6 @@ class ApplyMod(Cog):
         Want mod? Consider asking us out!
         """
         #return await ctx.send("Mod application are closed for the time being")
-        return
         await ctx.send(f"{ctx.author.mention} check your DM!", delete_after=3)
 
         try:

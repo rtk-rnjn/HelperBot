@@ -35,8 +35,8 @@ class ult(Cog, name="utilities", description="Basic commands for the bots."):
       if member is None:
           member = ctx.author
       embed = discord.Embed(timestamp=datetime.utcnow())
-      embed.add_field(name=member.name,value=f'[Download]({member.avatar.url})')
-      embed.set_image(url=member.avatar.url)
+      embed.add_field(name=member.name,value=f'[Download]({member.display_avatar.url})')
+      embed.set_image(url=member.display_avatar.url)
       embed.set_footer(text=f'Requested by {ctx.author.name}', icon_url= ctx.author.avatar.url)
       await ctx.reply(embed=embed)
 

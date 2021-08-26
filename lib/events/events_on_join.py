@@ -32,7 +32,7 @@ class OnJoin(Cog):
                 f"{member.name}#{member.discriminator} welcome to {member.guild.name}",
                 description="We glad to see you here. Check out <#785803322136592394> and enjoy!",
                 timestamp=member.created_at)
-            embed.set_thumbnail(url=f"{member.avatar.url}")
+            embed.set_thumbnail(url=f"{member.display_avatar.url}")
             embed.add_field(
                 name="Account age",
                 value=
