@@ -8,7 +8,7 @@ class RainbowRole(Cog):
         self.bot = bot
         self.RainbowRole.start()
 
-    @tasks.loop(seconds=295)
+    @tasks.loop(seconds=600)
     async def RainbowRole(self):
         await asyncio.sleep(5)
         role = discord.utils.get(self.bot.get_guild(741614680652644382).roles,
