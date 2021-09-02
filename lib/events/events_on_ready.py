@@ -37,7 +37,7 @@ class OnReady(Cog):
                     'avatar_url': "https://yt3.ggpht.com/ytc/AKedOLSsvX9K4ESvZt94SEKJg1Km6ufjYa_VUhbgXp6h=s176-c-k-c0x00ffffff-no-rj"
                 }
                 data['embeds'] = [{
-                    'description': f"```ini\n[{c.message}]\n```",
+                    'description': f"```\n{c.message}\n```",
                     'timestamp': date_obj.isoformat(),
                     'author': {
                         'name': f"{c.author.name}",
