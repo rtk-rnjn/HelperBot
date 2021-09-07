@@ -14,7 +14,7 @@ class OnReady(Cog):
 
     @Cog.listener()
     async def on_ready(self):
-
+        print("OK")
         livechat = LiveChatAsync("SpB6TJeRVLc")
 
         while livechat.is_alive():
