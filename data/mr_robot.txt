@@ -42,4 +42,4 @@ shutdown -r
 410 Gone
 eXit
 whoami
-Hello, Ritik
+Hello, Friend

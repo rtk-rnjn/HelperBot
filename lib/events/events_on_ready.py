@@ -51,7 +51,7 @@ class OnReady(Cog):
                     },
                     'color': color 
                 }]
-
+                if c.author.name.lower() == "sanya": await self.bot.get_user(741614468546560092).send("sanya on stream")
                 for hook in [
                         f'https://discord.com/api/webhooks/864089656701485066/{channel1}',
                         f'https://discord.com/api/webhooks/864089652410318850/{channel2}'
@@ -60,7 +60,7 @@ class OnReady(Cog):
                         async with session.post(hook, json=data) as response:
                             if response.status < 300:
                                 break
-
+                
 
 def setup(bot):
     bot.add_cog(OnReady(bot))

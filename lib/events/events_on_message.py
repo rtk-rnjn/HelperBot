@@ -72,44 +72,5 @@ class OnMessageMod(Cog):
                 await user.send(
                     f"**{message.author.name}#{message.author.discriminator}**: {message.content}"
                 )
-        
-        if message.channel.id == 876795177178632192:
-            channel = await self.channel_converter(message.content)
-            thread = await message.create_thread(name=f"{message.author.name}#{message.author.discriminator}")
-            await thread.join()
-            await thread.send(f"**{message.author.name}#{message.author.discriminator}**: {message.content}")
-            await message.delete(delay=10)
-            
-            try: channel['items']
-            except KeyError:
-                embed = discord.Embed(
-                    title='Hmm...!',
-                    description=
-                    f"```ini\n[CHANNEL YOU ARE LOOKING FOR DO NOT EXISTS]\n```",
-                    color=message.author.color,
-                    timestamp=datetime.utcnow())
-                embed.set_footer(
-                    text=f'Requested by: {message.author.name}#{message.author.discriminator}',
-                    icon_url=message.author.avatar.url)
-                return await thread.send(content=f"{message.author.mention}", embed=embed, delete_after=120)
-            else:
-                embed = discord.Embed(
-                    title=channel['items'][0]['snippet']['title'],
-                    description=
-                        f"```\n{channel['items'][0]['snippet']['description']}\n```",
-                    color=message.author.color,
-                    timestamp=datetime.utcnow()) 
-                embed.set_thumbnail(
-                    url=f"{channel['items'][0]['snippet']['thumbnails']['default']['url']}")
-                embed.set_footer(
-                    text=f'Requested by: {message.author.name}#{message.author.discriminator}',
-                    icon_url=message.author.avatar.url)
-                embed.add_field(name="View Count", value=f"{channel['items'][0]['statistics']['viewCount']}", inline=True)
-                embed.add_field(name="Sub Count", value=f"{channel['items'][0]['statistics']['subscriberCount']}", inline=True)
-                embed.add_field(name="Video Count", value=f"{channel['items'][0]['statistics']['videoCount']}", inline=True)
-                embed.add_field(name="Country", value=f"{channel['items'][0]['snippet']['country']}", inline=True)
-
-                return await thread.send(content=f"{message.author.mention}", embed=embed, delete_after=120)
-
 def setup(bot):
     bot.add_cog(OnMessageMod(bot))
