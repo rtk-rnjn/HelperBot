@@ -11,10 +11,14 @@ class OnJoin(Cog):
         self.sus = None
         self.inv = None
         self.channel = None
+        self.ping_channel = None
     
     @Cog.listener()
     async def on_member_join(self, member):
         await self.bot.wait_until_ready()
+        if self.ping_channel is None:
+            self.ping_channel = self.bot.get_channel(785803322136592394)
+        await self.ping_channel.send(f"{member.mention}", delete_after=1)
         if member.guild.id == 741614680652644382:
             current_count = get(await member.guild.invites(), code="NEyJxM7G7f").uses
             if (current_count - 1) == self.invite_count:
