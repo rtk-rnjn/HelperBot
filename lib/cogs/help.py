@@ -245,13 +245,13 @@ class PaginatedHelpCommand(commands.HelpCommand):
 
         menu = HelpMenu(FrontPageSource(), ctx=self.context)
         menu.add_categories(all_commands)
-        await self.context.release()
+        #await self.context.release()
         await menu.start()
 
     async def send_cog_help(self, cog):
         entries = await self.filter_commands(cog.get_commands(), sort=True)
         menu = HelpMenu(GroupHelpPageSource(cog, entries, prefix=self.context.clean_prefix), ctx=self.context)
-        await self.context.release()
+        #await self.context.release()
         await menu.start()
 
     def common_command_formatting(self, embed_like, command):
@@ -279,7 +279,7 @@ class PaginatedHelpCommand(commands.HelpCommand):
         source = GroupHelpPageSource(group, entries, prefix=self.context.clean_prefix)
         self.common_command_formatting(source, group)
         menu = HelpMenu(source, ctx=self.context)
-        await self.context.release()
+        #await self.context.release()
         await menu.start()
 
 
@@ -323,26 +323,6 @@ class Meta(commands.Cog):
         if len(msg) > 2000:
             return await ctx.send('Output too long to display.')
         await ctx.send(msg)
-
-    @commands.group(name='prefix', invoke_without_command=True)
-    async def prefix(self, ctx):
-        """Manages the server's custom prefixes.
-        If called without a subcommand, this will list the currently set
-        prefixes.
-        """
-
-        prefixes = self.bot.get_guild_prefixes(ctx.guild)
-
-        # we want to remove prefix #2, because it's the 2nd form of the mention
-        # and to the end user, this would end up making them confused why the
-        # mention is there twice
-        del prefixes[1]
-
-        e = discord.Embed(title='Prefixes', colour=discord.Colour.blurple())
-        e.set_footer(text=f'{len(prefixes)} prefixes')
-        e.description = '\n'.join(f'{index}. {elem}' for index, elem in enumerate(prefixes, 1))
-        await ctx.send(embed=e)
-
 
 
     @commands.command(name='quit', hidden=True)
