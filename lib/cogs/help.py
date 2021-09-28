@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from discord.ext import commands, menus
 
-from .RoboPages import RoboPages
+from .robopage import RoboPages
 import discord
 from collections import Counter
 import datetime
