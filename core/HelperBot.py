@@ -1,3 +1,4 @@
+from core import Context
 from discord.ext import commands
 import discord, traceback, jishaku
 from utils.config import EXTENTIONS, TOKEN
@@ -37,8 +38,23 @@ class HelperBot(commands.Bot):
         print(
             f"[HelperBot] {self.user.name}#{self.user.discriminator} ready to take commands"
         )
+    async def process_commands(self, message: discord.Message):
+        ctx = await self.get_context(message, cls=Context)
+        if not message.guild.id == 741614680652644382:
+            return
+
+        if ctx.command is None:
+            # ignore if no command found
+            return
+        await self.invoke(ctx)
+
+    async def on_message(self, message: discord.Message):
+        self._seen_messages += 1
+
+        if not message.guild:
+            return
+
+        await self.process_commands(message)
 
     async def get_prefix(self, message: discord.Message) -> str:
-        if not message.guild: return ""
-        if message.guild.id != 741614680652644382: return ""
         return commands.when_mentioned_or('H!', 'h!')(self, message)

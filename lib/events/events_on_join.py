@@ -22,7 +22,7 @@ class OnJoin(Cog):
         if member.guild.id == 741614680652644382:
             current_count = get(await member.guild.invites(), code="NEyJxM7G7f").uses
             if (current_count - 1) == self.invite_count:
-                await member.add_roles(self.inv, reason="Joined from Either Stream or Support")
+                await member.add_roles(self.inv, reason="Joined from Global Link")
 
             created = member.created_at
             today = member.joined_at
