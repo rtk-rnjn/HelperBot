@@ -20,6 +20,7 @@ class Hightlight(Cog):
     def __init__(self, bot: HelperBot) -> None:
         self.bot = bot
         self.data = list()
+        self.task.start()
 
     @commands.command(name='hadd')
     async def hadd(self, ctx: Context, *, phrase: str):
@@ -106,4 +107,6 @@ class Hightlight(Cog):
         self.data = []
         async for data in collection.find({}):
             self.data.append(data)
-            
+
+def setup(bot):
+    bot.add_cog(Hightlight(bot))

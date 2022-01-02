@@ -5,6 +5,7 @@ EXTENTIONS = [
     'jishaku',
     'lib.cogs.youtube',
     'lib.cogs.applymod',
+    'lib.cogs.highlight',
     'lib.events.events_on_message',
     'lib.events.events_on_ready',
     'lib.events.events_cmd_error',
