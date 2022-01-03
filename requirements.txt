@@ -5,4 +5,3 @@ jishaku
 psutil
 pytchat
 Flask
-PyNaCl
