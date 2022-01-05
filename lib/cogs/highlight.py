@@ -93,7 +93,10 @@ class Hightlight(Cog):
         return embed
     
     async def send_embed(self, _id, embed):
-        await self.bot.get_member(_id).send(embed=embed)
+        try:
+            await self.bot.get_user(_id).send(embed=embed)
+        except Exception as e:
+            print(e)
 
     @tasks.loop(seconds=5)
     async def task(self):
