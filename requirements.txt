@@ -1,7 +1,6 @@
-aiohttp
+aiohttp==3.8.1
 git+https://github.com/Pycord-Development/pycord
 git+https://github.com/Rapptz/discord-ext-menus@fbb8803779373357e274e1540b368365fd9d8074
 jishaku
-psutil
-pytchat
-Flask
+psutil==5.9.0
+Flask==2.0.2
