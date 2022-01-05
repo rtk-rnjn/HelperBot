@@ -77,24 +77,24 @@ class Hightlight(Cog):
 
         for data in self.data:
             if message.content.lower() in data['word']:
-                # if message.author.id != data['_id']:
+                if message.author.id != data['_id']:
                     embed = await self.make_embed(message, message.content)
-                    await self.send_embed(data['_id'], embed)
+                    await self.send_embed(data['_id'], embed, content="In {member.channel.mention} for server `{message.guild.name}`, you were mentioned with the highlight word **{message.content}**")
     
     async def make_embed(self, message, text: str) -> Optional[discord.Embed]:
         ls = []
         async for msg in message.channel.history(
                             limit=5,
                         ):
-            ls.append(f"[**{discord.utils.format_dt(msg.created_at)}**] {msg.author}: {msg.content.replace(text, f'**{text}**')}")
-        embed = discord.Embed(timestamp=message.created_at, color=message.author.color)
+            ls.append(f"[**{discord.utils.format_dt(msg.created_at, 'T')}**] {msg.author}: {msg.content.replace(text, f'**{text}**')}")
+        embed = discord.Embed(title=f"{text}", timestamp=message.created_at, color=message.author.color)
         embed.description = '\n'.join(ls)
         embed.add_field(name='Jump URL', value=f"[Jump Url]({message.jump_url})")
         return embed
     
-    async def send_embed(self, _id, embed):
+    async def send_embed(self, _id, embed, *, content):
         try:
-            await self.bot.get_user(_id).send(embed=embed)
+            await self.bot.get_user(_id).send(content=content, embed=embed)
         except Exception as e:
             print(e)
 
