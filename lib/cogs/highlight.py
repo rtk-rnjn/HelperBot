@@ -75,8 +75,9 @@ class Hightlight(Cog):
 
         for data in self.data:
             if data['word'] in message.content.lower():
-                embed = await self.make_embed(message, data['word'])
-                await self.send_embed(data['_id'], embed)
+                if message.author.id != data['_id']:
+                    embed = await self.make_embed(message, data['word'])
+                    await self.send_embed(data['_id'], embed)
     
     async def make_embed(self, message, text: str) -> Optional[discord.Embed]:
         ls = list()

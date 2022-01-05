@@ -62,12 +62,6 @@ class Cmd(Cog):
             await ctx.send(_message)
             return
 
-        elif isinstance(error, commands.MissingRole):
-
-            _message = '{}\n\nMissing Role. You need the the following role(s) to use the command.```\n{}```'.format(
-                random.choice(quote), fmt)
-            await ctx.send(_message)
-            return
 
         elif isinstance(error, commands.MissingAnyRole):
             missing = [role for role in error.missing_roles]
