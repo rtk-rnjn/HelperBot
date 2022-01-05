@@ -64,6 +64,8 @@ class Hightlight(Cog):
         """Shows all your highlight words."""
         if data := await collection.find_one({'_id': ctx.author.id}):
             await ctx.send(f"Your words/phrase `{'`, `'.join(data['word'])}`")
+        else:
+            await ctx.send('You dont have any highlight words yet')
     
     @Cog.listener()
     async def on_message(self, message: discord.Message):
@@ -74,7 +76,7 @@ class Hightlight(Cog):
             return
 
         for data in self.data:
-            if data['word'] in message.content.lower():
+            if message.content.lower() in data['word']:
                 if message.author.id != data['_id']:
                     embed = await self.make_embed(message, data['word'])
                     await self.send_embed(data['_id'], embed)
