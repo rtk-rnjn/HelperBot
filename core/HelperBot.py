@@ -49,7 +49,6 @@ class HelperBot(commands.Bot):
         await self.invoke(ctx)
 
     async def on_message(self, message: discord.Message):
-        self._seen_messages += 1
 
         if not message.guild:
             return
