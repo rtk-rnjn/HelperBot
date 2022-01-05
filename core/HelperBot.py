@@ -1,4 +1,4 @@
-from core import Context
+from .Context import Context
 from discord.ext import commands
 import discord, traceback, jishaku
 from utils.config import EXTENTIONS, TOKEN
@@ -39,7 +39,7 @@ class HelperBot(commands.Bot):
             f"[HelperBot] {self.user.name}#{self.user.discriminator} ready to take commands"
         )
     async def process_commands(self, message: discord.Message):
-        ctx = await self.get_context(message, cls=Context)
+        ctx = await self.get_context(message, cls=Context or commands.Context)
         if not message.guild.id == 741614680652644382:
             return
 
