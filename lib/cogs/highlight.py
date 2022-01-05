@@ -92,7 +92,7 @@ class Hightlight(Cog):
             if message.author.bot:
                 pass
             else:
-                ls.append(f"[**{discord.utils.format_dt(msg.created_at)}**] {msg.author}: {msg.content.replace(text).replace('**'+text+'**')}")
+                ls.append(f"[**{discord.utils.format_dt(msg.created_at)}**] {msg.author}: {msg.content.replace(text, '**'+text+'**')}")
         embed = discord.Embed(timestamp=message.created_at, color=message.author.color)
         embed.description = '\n'.join(ls)
         embed.add_field(name='Jump URL', value=f"[Jump Url]({message.jump_url})")
