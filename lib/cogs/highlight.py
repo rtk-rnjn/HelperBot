@@ -77,22 +77,16 @@ class Hightlight(Cog):
 
         for data in self.data:
             if message.content.lower() in data['word']:
-                if message.author.id != data['_id']:
+                # if message.author.id != data['_id']:
                     embed = await self.make_embed(message, message.content)
                     await self.send_embed(data['_id'], embed)
     
     async def make_embed(self, message, text: str) -> Optional[discord.Embed]:
-        ls = list()
+        ls = []
         async for msg in message.channel.history(
-                            limit=5, 
-                            before=discord.Object(
-                                message.id+1
-                            )
+                            limit=5,
                         ):
-            if message.author.bot:
-                pass
-            else:
-                ls.append(f"[**{discord.utils.format_dt(msg.created_at)}**] {msg.author}: {msg.content.replace(text, '**'+text+'**')}")
+            ls.append(f"[**{discord.utils.format_dt(msg.created_at)}**] {msg.author}: {msg.content.replace(text, f'**{text}**')}")
         embed = discord.Embed(timestamp=message.created_at, color=message.author.color)
         embed.description = '\n'.join(ls)
         embed.add_field(name='Jump URL', value=f"[Jump Url]({message.jump_url})")
