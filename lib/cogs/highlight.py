@@ -28,6 +28,13 @@ class Hightlight(Cog):
         pattern = rf'\b{word}\b'
         return re.search(pattern, sentence) is not None
 
+    def word(self, list_of_phrase: str, sentence: str) -> bool:
+        for phrase in list_of_phrase:
+            word = re.escape(phrase)
+            pattern = rf'\b{word}\b'
+            if re.search(pattern, sentence) is not None:
+                return word
+
     @commands.command(name='hadd')
     async def hadd(self, ctx: Context, *, phrase: str):
         """
@@ -84,7 +91,8 @@ class Hightlight(Cog):
         for data in self.data:
             if message.author.id != data['_id']:
                 if any(self.isin(content, message.content.lower()) for content in data['word']):
-                    embed = await self.make_embed(message, data['word'])
+                    word = self.word(data['word'], message.content.lower())
+                    embed = await self.make_embed(message, word)
                     await self.send_embed(data['_id'], embed, content=f"In {message.channel.mention} for server `{message.guild.name}`, you were mentioned with the highlight word **{message.content}**")
     
     async def make_embed(self, message, text: str) -> Optional[discord.Embed]:
