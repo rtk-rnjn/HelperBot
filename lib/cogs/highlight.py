@@ -80,7 +80,7 @@ class Hightlight(Cog):
             # if message.author.id != data['_id']:
                 search = re.search(f"{data['word']}", message.content.lower())
                 if search:
-                    word = message.content.lower()[search.span()[0], search.span()[1]]
+                    word = message.content.lower()[search.span()[0]:search.span()[1]]
                     embed = await self.make_embed(message, word)
                     await self.send_embed(data['_id'], embed, content=f"In {message.channel.mention} for server `{message.guild.name}`, you were mentioned with the highlight word **{message.content}**")
     
@@ -89,7 +89,7 @@ class Hightlight(Cog):
         async for msg in message.channel.history(limit=5,):
             ls.append(f"[**{discord.utils.format_dt(msg.created_at, 'T')}**] {msg.author}: {msg.content.replace(text, f'**{text}**')}")
         embed = discord.Embed(title=f"{text}", timestamp=message.created_at, color=message.author.color)
-        ls = ls.reverse()
+        ls.reverse()
         embed.description = '\n'.join(ls)
         embed.add_field(name='Jump URL', value=f"[Jump Url]({message.jump_url})")
         return embed
