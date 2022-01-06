@@ -77,7 +77,7 @@ class Hightlight(Cog):
             return
 
         for data in self.data:
-            # if message.author.id != data['_id']:
+            if message.author.id != data['_id']:
                 if any(content in message.content.lower() for content in data['word']):
                     embed = await self.make_embed(message, message.content)
                     await self.send_embed(data['_id'], embed, content=f"In {message.channel.mention} for server `{message.guild.name}`, you were mentioned with the highlight word **{message.content}**")
