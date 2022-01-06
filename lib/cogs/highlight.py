@@ -77,7 +77,7 @@ class Hightlight(Cog):
             return
 
         for data in self.data:
-            if message.author.id != data['_id']:
+            # if message.author.id != data['_id']:
                 search = re.search(f"{data['word']}", message.content.lower())
                 if search:
                     word = message.content.lower()[search.span()[0], search.span()[1]]
