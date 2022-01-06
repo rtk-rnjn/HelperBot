@@ -23,6 +23,11 @@ class Hightlight(Cog):
         self.data = list()
         self.task.start()
 
+    def isin(self, phrase: str, sentence: str) -> bool:
+        word = re.escape(phrase)
+        pattern = rf'\b{word}\b'
+        return re.search(pattern, sentence) is not None
+
     @commands.command(name='hadd')
     async def hadd(self, ctx: Context, *, phrase: str):
         """
@@ -78,7 +83,7 @@ class Hightlight(Cog):
 
         for data in self.data:
             if message.author.id != data['_id']:
-                if any(content in message.content.lower().split(' ') for content in data['word']):
+                if any(self.isin(content, message.content.lower()) for content in data['word']):
                     embed = await self.make_embed(message, data['word'])
                     await self.send_embed(data['_id'], embed, content=f"In {message.channel.mention} for server `{message.guild.name}`, you were mentioned with the highlight word **{message.content}**")
     
