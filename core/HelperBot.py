@@ -50,7 +50,6 @@ class HelperBot(commands.Bot):
         await self.invoke(ctx)
 
     async def on_message(self, message: discord.Message):
-
         if not message.guild:
             return
 
