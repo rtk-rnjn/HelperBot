@@ -1,8 +1,8 @@
-aiohttp==3.8.1
-git+https://github.com/Pycord-Development/pycord
+aiohttp
+https://github.com/rtk-rnjn/pycord.git
 jishaku
-psutil==5.9.0
-Flask==2.0.2
+psutil
+Flask
 motor
 dnspython
 pymongo
