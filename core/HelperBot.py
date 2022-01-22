@@ -21,6 +21,7 @@ class HelperBot(commands.Bot):
                              name="Parrot"),
                          status=discord.Status.idle,
                          **kwargs)
+        self._BotBase__cogs = commands.core._CaseInsensitiveDict()
 
         for ext in EXTENTIONS:
             try:
