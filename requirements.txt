@@ -2,7 +2,6 @@ aiohttp
 git+https://github.com/Pycord-Development/pycord
 jishaku
 psutil
-Flask
 motor
 dnspython
 pymongo
