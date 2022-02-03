@@ -64,3 +64,6 @@ class HelperBot(commands.Bot):
 
     async def get_prefix(self, message: discord.Message) -> str:
         return commands.when_mentioned_or('H!', 'h!', '!H', '!h')(self, message)
+
+    async def invoke_help_command(self, ctx: Context) -> None:
+        return await ctx.send_help(ctx.command)
