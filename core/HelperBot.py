@@ -31,6 +31,7 @@ class HelperBot(commands.Bot):
         )
         self._BotBase__cogs = commands.core._CaseInsensitiveDict()
         self._CogMixin__cogs = commands.core._CaseInsensitiveDict()
+
         for ext in EXTENTIONS:
             try:
                 self.load_extension(ext)
@@ -56,7 +57,6 @@ class HelperBot(commands.Bot):
         await self.invoke(ctx)
 
     async def on_message(self, message: discord.Message):
-
         if not message.guild:
             return
 
