@@ -104,7 +104,7 @@ class Hightlight(Cog):
     @Cog.listener()
     async def on_message(self, message: discord.Message):
         await self.bot.wait_until_ready()
-        await asyncio.slee(0.5)
+        await asyncio.sleep(0.5)
         if message.author.bot:
             return
         if not message:

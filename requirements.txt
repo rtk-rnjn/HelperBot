@@ -2,6 +2,7 @@ aiohttp
 git+https://github.com/Pycord-Development/pycord
 jishaku
 psutil
+markdownify
 motor
 dnspython
 pymongo
