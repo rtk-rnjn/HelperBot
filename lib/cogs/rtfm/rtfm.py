@@ -1567,3 +1567,6 @@ Useful to hide your syntax fails or when you forgot to print the result.""",
         wait_for_kata = await kata_view.wait()
         if wait_for_kata:
             await original_message.edit(embed=kata_embed, view=None)
+
+def setup(bot: HelperBot):
+    bot.add_cog(RTFM(bot))

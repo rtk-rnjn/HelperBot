@@ -20,6 +20,7 @@ db = cluster["highlight"]
 collection = db["highlight"]
 
 class Hightlight(Cog):
+    """A highlight system!"""
     def __init__(self, bot: HelperBot) -> None:
         self.bot = bot
         self.data = []

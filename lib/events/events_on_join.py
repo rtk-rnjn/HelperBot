@@ -27,8 +27,6 @@ class OnJoin(Cog):
             created = member.created_at
             today = member.joined_at
 
-            timedelta = str(today - created).split(":")
-
             guild = member.guild
 
             embed = Embed(
@@ -38,9 +36,8 @@ class OnJoin(Cog):
                 timestamp=member.created_at)
             embed.set_thumbnail(url=f"{member.display_avatar.url}")
             embed.add_field(
-                name="Account age",
-                value=
-                f"```{timedelta[0]} Hr(s) {timedelta[1]} Min(s) {timedelta[2]} Sec(s)```",
+                name="Account created at",
+                value=f"<t:int({created.timestamp()})>",
                 inline=False)
             embed.set_footer(text=f"ID: {member.id}", icon_url=guild.icon.url)
             await self.channel.send(embed=embed)
