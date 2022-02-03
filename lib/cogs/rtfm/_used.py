@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import functools
+from socket import herror
 import aiohttp
 import discord
 import re
@@ -9,7 +10,7 @@ from yaml import safe_load as yaml_load
 
 from ._tio import Tio
 
-from core import Parrot
+from core import HelperBot
 
 with open("extra/lang.txt") as f:
     languages = f.read().split("\n")
@@ -68,7 +69,7 @@ async def get_message(interaction: discord.Interaction, fetch=False) -> discord.
 
 
 class RerunBtn(discord.ui.Button):
-    def __init__(self, bot: Parrot, **kwargs):
+    def __init__(self, bot: HelperBot, **kwargs):
         super().__init__(**kwargs)
         self.bot = bot
 
