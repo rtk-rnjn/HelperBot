@@ -35,7 +35,7 @@ from ._used import typing, get_raw, Refresh, wrapping, prepare_payload, execute_
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-with open("extra/lang.txt") as f:
+with open("data/lang.txt") as f:
     languages = f.read()
 
 GITHUB_API_URL = "https://api.github.com"
