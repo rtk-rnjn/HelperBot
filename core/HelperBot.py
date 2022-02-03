@@ -1,8 +1,12 @@
+
 from .Context import Context
 from discord.ext import commands
 import discord, traceback, jishaku
 from utils.config import EXTENTIONS, TOKEN
+import aiohttp
 
+from aiohttp import AsyncResolver, ClientSession, TCPConnector
+import socket
 import os
 
 os.environ["JISHAKU_HIDE"] = "True"
@@ -21,7 +25,12 @@ class HelperBot(commands.Bot):
                              name="Parrot"),
                          status=discord.Status.idle,
                          **kwargs)
-
+        self.session = aiohttp.ClientSession(loop=self.loop)
+        self.http_session = ClientSession(
+            connector=TCPConnector(resolver=AsyncResolver(), family=socket.AF_INET)
+        )
+        self._BotBase__cogs = commands.core._CaseInsensitiveDict()
+        self._CogMixin__cogs = commands.core._CaseInsensitiveDict()
         for ext in EXTENTIONS:
             try:
                 self.load_extension(ext)
