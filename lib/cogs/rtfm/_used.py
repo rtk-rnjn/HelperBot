@@ -12,7 +12,7 @@ from ._tio import Tio
 
 from core import HelperBot
 
-with open("extra/lang.txt") as f:
+with open("data/lang.txt") as f:
     languages = f.read().split("\n")
 
 wrapping = {
@@ -25,7 +25,7 @@ wrapping = {
     "kotlin": "fun main(args: Array<String>) {code}",
 }
 
-with open("extra/default_langs.yml", "r") as file:
+with open("data/default_langs.yml", "r") as file:
     default_langs = yaml_load(file)
 
 
