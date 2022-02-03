@@ -36,13 +36,11 @@ class HelperBot(commands.Bot):
 
     async def on_ready(self):
         print(
-            f"[HelperBot] {self.user.name}#{self.user.discriminator} ready to take commands"
+            f"[HelperBot] {self.user} ready to take commands"
         )
     async def process_commands(self, message: discord.Message):
         ctx = await self.get_context(message, cls=Context or commands.Context)
-        if not message.guild.id == 741614680652644382:
-            return
-
+        
         if ctx.command is None:
             # ignore if no command found
             return
@@ -56,4 +54,4 @@ class HelperBot(commands.Bot):
         await self.process_commands(message)
 
     async def get_prefix(self, message: discord.Message) -> str:
-        return commands.when_mentioned_or('H!', 'h!')(self, message)
+        return commands.when_mentioned_or('H!', 'h!', '!H', '!h')(self, message)

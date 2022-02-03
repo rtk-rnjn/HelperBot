@@ -1,11 +1,13 @@
 
 from __future__ import annotations
+
 import os
 import re
-from typing import Optional
+from typing import Optional, Union
 from discord.ext import commands, tasks
 import discord
 import motor.motor_asyncio
+import asyncio
 from core import HelperBot, Cog, Context
 
 
@@ -20,7 +22,7 @@ collection = db["highlight"]
 class Hightlight(Cog):
     def __init__(self, bot: HelperBot) -> None:
         self.bot = bot
-        self.data = list()
+        self.data = []
         self.task.start()
 
     def isin(self, phrase: str, sentence: str) -> bool:
@@ -76,24 +78,47 @@ class Hightlight(Cog):
     async def hshow(self, ctx: Context):
         """Shows all your highlight words."""
         if data := await collection.find_one({'_id': ctx.author.id}):
-            await ctx.send(f"Your words/phrase `{'`, `'.join(data['word'])}`")
+            await ctx.send(f"Your words/phrase ``{'``, ``'.join(data['word'])}``")
         else:
             await ctx.send('You dont have any highlight words yet')
     
+    @commands.command('hblock')
+    async def hblock(self, ctx: Context, *, target: Union[discord.Member, discord.TextChannel]=None):
+        """Blockes the User or TextChannel from getting the highlight words"""
+        if data := await collection.find_one({'_id': ctx.author.id}):
+            await collection.update_one({'_id': ctx.author.id}, {'$addToSet': {'blocked': target.id}})
+            await ctx.send(f"Added {target} to your blocked list")
+        else:
+            await ctx.send("You dont have any highligh words yet")
+
+    @commands.command('hunblock')
+    async def hblock(self, ctx: Context, *, target: Union[discord.Member, discord.TextChannel]=None):
+        """Unblockes the User or TextChannel from getting the highlight words"""
+        if data := await collection.find_one({'_id': ctx.author.id}):
+            await collection.update_one({'_id': ctx.author.id}, {'$pull': {'blocked': target.id}})
+            await ctx.send(f"Removed {target} from your blocked list, if existed")
+        else:
+            await ctx.send("You dont have any highligh words yet")
+
     @Cog.listener()
     async def on_message(self, message: discord.Message):
         await self.bot.wait_until_ready()
+        await asyncio.slee(0.5)
         if message.author.bot:
+            return
+        if not message:
             return
         if message.guild is None:
             return
 
         for data in self.data:
+            if message.author.id in data.get('blocked', []) or message.channel.id in data.get('blocked', []):
+                return
             if message.author.id != data['_id']:
                 if any(self.isin(content, message.content.lower()) for content in data['word']):
                     word = self.word(data['word'], message.content.lower())
                     embed = await self.make_embed(message, word)
-                    await self.send_embed(data['_id'], embed, content=f"In {message.channel.mention} for server `{message.guild.name}`, you were mentioned with the highlight word **{message.content}**")
+                    await self.send_embed(data['_id'], embed, content=f"In {message.channel.mention} for server `{message.guild.name}`, you were mentioned with the highlight word **{word}**")
     
     async def make_embed(self, message, text: str) -> Optional[discord.Embed]:
         ls = []
