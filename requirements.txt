@@ -6,3 +6,10 @@ motor
 dnspython
 pymongo
 aiodns
+brotlipy
+orjson
+cchardet
+rapidfuzz
+beautifulsoup4
+PyYAML
+typing_extensions
