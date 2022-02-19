@@ -37,7 +37,7 @@ class OnJoin(Cog):
             embed.set_thumbnail(url=f"{member.display_avatar.url}")
             embed.add_field(
                 name="Account created at",
-                value=f"<t:int({created.timestamp()})>",
+                value=f"<t:{int(created.timestamp())}>",
                 inline=False)
             embed.set_footer(text=f"ID: {member.id}", icon_url=guild.icon.url)
             await self.channel.send(embed=embed)
