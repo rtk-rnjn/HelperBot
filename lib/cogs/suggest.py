@@ -112,7 +112,7 @@ class Suggest(commands.Cog):
 
         content = (
             f"{user.mention} you suggestion of ID: {message.id} had being updated.\n"
-            f"By: {ctx.author} (`{ctx.author.mention}`)\n"
+            f"By: {ctx.author} (`{ctx.author.id}`)\n"
             f"Remark: {remark}\n"
             f"> {message.jump_url}"
         )
@@ -177,7 +177,6 @@ class Suggest(commands.Cog):
             )
         
         table = TabularData()
-        table.set_columns(["Upvote", "Downvote"])
         upvoter = []
         downvoter = []
         for reaction in msg.reactions:
@@ -187,7 +186,11 @@ class Suggest(commands.Cog):
                 downvoter = await reaction.users().flatten()
         upvoter = [str(m) for m in upvoter]
         downvoter = [str(m) for m in downvoter]
-        table.add_rows(list(zip_longest(upvoter, downvoter, fillvalue='')))
+        
+        table.set_columns(["Upvote", "Downvote"])
+        ls = list(zip_longest(upvoter, downvoter, fillvalue=''))
+        print(ls)
+        table.add_rows(ls)
 
         conflict = [str(i) for i in upvoter + downvoter if i not in upvoter or i not in downvoter]
 
@@ -212,7 +215,7 @@ class Suggest(commands.Cog):
         embed = msg.embeds[0]
         embed.clear_fields()
         embed.add_field(name="Remark", value=remark[:250])
-        await msg.edit(embed=embed)
+        await msg.edit(content=msg.content, embed=embed)
 
         user_id = int(embed.footer.text.split(":")[1])
         user = ctx.guild.get_member(user_id)
@@ -233,7 +236,7 @@ class Suggest(commands.Cog):
         embed = msg.embeds[0]
         embed.clear_fields()
         embed.color = 0xADD8E6
-        await msg.edit(embed=embed)
+        await msg.edit(embed=embed, content=None)
 
         for reaction in msg.reactions:
             if str(reaction.emoji) not in REACTION_EMOJI:
