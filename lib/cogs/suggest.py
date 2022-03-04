@@ -189,10 +189,9 @@ class Suggest(commands.Cog):
         
         table.set_columns(["Upvote", "Downvote"])
         ls = list(zip_longest(upvoter, downvoter, fillvalue=''))
-        print(ls)
         table.add_rows(ls)
 
-        conflict = [str(i) for i in upvoter + downvoter if i not in upvoter or i not in downvoter]
+        conflict = [i for i in upvoter if i in downvoter]
 
         embed = discord.Embed()
         embed.description = f"```\n{table.render()}```"
