@@ -185,9 +185,11 @@ class Suggest(commands.Cog):
                 upvoter = await reaction.users().flatten()
             elif str(reaction.emoji) == "\N{DOWNWARDS BLACK ARROW}":
                 downvoter = await reaction.users().flatten()
-        table.add_rows(zip_longest(upvoter, downvoter, fillvalue=''))
-        
-        conflict = [i for i in upvoter + downvoter if i not in upvoter or i not in downvoter]
+        upvoter = [str(m) for m in upvoter]
+        downvoter = [str(m) for m in downvoter]
+        table.add_rows(list(zip_longest(upvoter, downvoter, fillvalue='')))
+
+        conflict = [str(i) for i in upvoter + downvoter if i not in upvoter or i not in downvoter]
 
         embed = discord.Embed()
         embed.description = f"```\n{table.render()}```"
@@ -242,7 +244,7 @@ class Suggest(commands.Cog):
 
     @suggest.command(name="flag")
     @commands.has_permissions(manage_messages=True)
-    async def suggest_flag(self, ctx, messageID, flag: str):
+    async def suggest_flag(self, ctx, messageID: int, flag: str):
         """To flag the suggestion.
         
         Avalibale Flags :-
