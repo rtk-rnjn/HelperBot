@@ -26,5 +26,5 @@ class OnMessage(Cog):
             except discord.Forbidden:
                 pass
 
-def setup(bot):
-    bot.add_cog(OnMessage(bot))
+async def setup(bot):
+    await bot.add_cog(OnMessage(bot))

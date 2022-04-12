@@ -143,5 +143,5 @@ class Hightlight(Cog):
         async for data in collection.find({}):
             self.data.append(data)
 
-def setup(bot):
-    bot.add_cog(Hightlight(bot))
+async def setup(bot):
+    await bot.add_cog(Hightlight(bot))

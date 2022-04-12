@@ -1,6 +1,5 @@
 aiohttp
-git+https://github.com/Pycord-Development/pycord
-jishaku
+git+https://github.com/Rapptz/discord.pyjishaku
 psutil
 markdownify
 motor

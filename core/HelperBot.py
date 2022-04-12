@@ -25,21 +25,10 @@ class HelperBot(commands.Bot):
                              name="Parrot"),
                          status=discord.Status.idle,
                          **kwargs)
-        self.session = aiohttp.ClientSession(loop=self.loop)
         self.http_session = ClientSession(
             connector=TCPConnector(resolver=AsyncResolver(), family=socket.AF_INET)
         )
         self._BotBase__cogs = commands.core._CaseInsensitiveDict()
-        self._CogMixin__cogs = commands.core._CaseInsensitiveDict()
-
-        for ext in EXTENTIONS:
-            try:
-                self.load_extension(ext)
-                print(f"[EXTENSION] {ext} was loaded successfully!")
-            except Exception as e:
-                tb = traceback.format_exception(type(e), e, e.__traceback__)
-                tbe = "".join(tb) + ""
-                print(f"[WARNING] Could not load extension {ext}: {tbe}")
 
     def run(self):
         super().run(TOKEN, reconnect=True)
@@ -48,6 +37,7 @@ class HelperBot(commands.Bot):
         print(
             f"[HelperBot] {self.user} ready to take commands"
         )
+
     async def process_commands(self, message: discord.Message):
         ctx = await self.get_context(message, cls=Context or commands.Context)
         
@@ -55,6 +45,16 @@ class HelperBot(commands.Bot):
             # ignore if no command found
             return
         await self.invoke(ctx)
+
+    async def setup_hool(self):
+        for ext in EXTENTIONS:
+            try:
+                self.load_extension(ext)
+                print(f"[EXTENSION] {ext} was loaded successfully!")
+            except Exception as e:
+                tb = traceback.format_exception(type(e), e, e.__traceback__)
+                tbe = "".join(tb) + ""
+                print(f"[WARNING] Could not load extension {ext}: {tbe}")
 
     async def on_message(self, message: discord.Message):
         if not message.guild:

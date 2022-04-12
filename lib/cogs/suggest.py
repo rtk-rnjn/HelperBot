@@ -373,5 +373,5 @@ class Suggest(commands.Cog):
 
         return False
 
-def setup(bot: HelperBot):
-    bot.add_cog(Suggest(bot))
+async def setup(bot: HelperBot):
+    await bot.add_cog(Suggest(bot))

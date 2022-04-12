@@ -19,7 +19,7 @@ class Context(commands.Context):
 
     @property
     def session(self) -> typing.Any:
-        return self.bot.session
+        return self.bot.http_session
 
     @discord.utils.cached_property
     def replied_reference(self) -> typing.Optional[discord.Message]:
