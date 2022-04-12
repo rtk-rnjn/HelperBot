@@ -30,5 +30,5 @@ class RainbowRole(Cog):
         if self.not_your_role:
             await self.not_your_role.edit(colour=random.choice(color), reason="Action featured by !! Ritik Ranjan [*.*]#9230")
 
-def setup(bot):
-    bot.add_cog(RainbowRole(bot))
+async def setup(bot):
+    await bot.add_cog(RainbowRole(bot))

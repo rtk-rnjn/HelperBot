@@ -25,5 +25,5 @@ class ChannelBow(Cog):
         await self.bot.get_channel(770691788960432169).edit(name=f'{choice(title)}', reason=f"Action featured by !! Ritik Ranjan [*.*]")
 
 
-def setup(bot):
-    bot.add_cog(ChannelBow(bot))
+async def setup(bot):
+    await bot.add_cog(ChannelBow(bot))

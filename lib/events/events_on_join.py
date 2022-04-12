@@ -56,5 +56,5 @@ class OnJoin(Cog):
         self.inv = guild.get_role(876780196500484117)
         self.channel = guild.get_channel(796645162860150784)
 
-def setup(bot):
-    bot.add_cog(OnJoin(bot))
+async def setup(bot):
+    await bot.add_cog(OnJoin(bot))

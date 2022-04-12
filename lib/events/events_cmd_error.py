@@ -147,5 +147,5 @@ class Cmd(Cog):
               await ctx.send('Copy paste this error to `!! Ritik Ranjan [*.*]#9230`\n\n```py\nIgnoring exception in command {}: {}\n```'.format(ctx.command.name, tbe))
             
 
-def setup(bot):
-    bot.add_cog(Cmd(bot))
+async def setup(bot):
+    await bot.add_cog(Cmd(bot))
