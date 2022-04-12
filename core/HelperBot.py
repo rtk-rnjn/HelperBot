@@ -25,9 +25,6 @@ class HelperBot(commands.Bot):
                              name="Parrot"),
                          status=discord.Status.idle,
                          **kwargs)
-        self.http_session = ClientSession(
-            connector=TCPConnector(resolver=AsyncResolver(), family=socket.AF_INET)
-        )
         self._BotBase__cogs = commands.core._CaseInsensitiveDict()
 
     def run(self):
@@ -46,7 +43,7 @@ class HelperBot(commands.Bot):
             return
         await self.invoke(ctx)
 
-    async def setup_hool(self):
+    async def setup_hook(self):
         for ext in EXTENTIONS:
             try:
                 self.load_extension(ext)
