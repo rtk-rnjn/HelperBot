@@ -46,7 +46,7 @@ class HelperBot(commands.Bot):
     async def setup_hook(self):
         for ext in EXTENTIONS:
             try:
-                self.load_extension(ext)
+                await self.load_extension(ext)
                 print(f"[EXTENSION] {ext} was loaded successfully!")
             except Exception as e:
                 tb = traceback.format_exception(type(e), e, e.__traceback__)
