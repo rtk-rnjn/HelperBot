@@ -1,5 +1,6 @@
 aiohttp
-git+https://github.com/Rapptz/discord.pyjishaku
+git+https://github.com/Rapptz/discord.py
+jishaku
 psutil
 markdownify
 motor
