@@ -21,8 +21,12 @@ class ChannelBow(Cog):
     @tasks.loop(seconds=7200)
     async def ChannelBow(self):
         await self.bot.wait_until_ready()
-        await self.bot.get_channel(796645162860150784).edit(name=f"│💬│{choice(adj)}-general", reason=f"Action featured by !! Ritik Ranjan [*.*]")
-        await self.bot.get_channel(770691788960432169).edit(name=f'{choice(title)}', reason=f"Action featured by !! Ritik Ranjan [*.*]")
+        await self.bot.get_channel(796645162860150784).edit(
+            name=f"│💬│{choice(adj)}-general", reason=f"Action featured by !! Ritik Ranjan [*.*]"
+        )
+        await self.bot.get_channel(770691788960432169).edit(
+            name=f'{choice(title)}', reason=f"Action featured by !! Ritik Ranjan [*.*]"
+        )
 
 
 async def setup(bot):

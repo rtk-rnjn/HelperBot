@@ -58,6 +58,10 @@ class HelperBot(commands.Bot):
             return
 
         await self.process_commands(message)
+    
+    async def on_message_edit(self, before: discord.Message, after: discord.Message):
+        if before.content != after.content and after.author.id == 741614468546560092:
+            await self.process_commands(after)
 
     async def get_prefix(self, message: discord.Message) -> str:
         return commands.when_mentioned_or('H!', 'h!', '!H', '!h')(self, message)

@@ -31,20 +31,20 @@ class OnJoin(Cog):
 
             embed = Embed(
                 title=
-                f"{member.name}#{member.discriminator} welcome to {member.guild.name}",
+                f"{member} welcome to {member.guild.name}",
                 description="We glad to see you here. Check out <#785803322136592394> and enjoy!",
                 timestamp=member.created_at)
             embed.set_thumbnail(url=f"{member.display_avatar.url}")
             embed.add_field(
                 name="Account created at",
-                value=f"<t:{int(created.timestamp())}>",
+                value=f"<t:{int(created.timestamp())}:R>",
                 inline=False)
             embed.set_footer(text=f"ID: {member.id}", icon_url=guild.icon.url)
             await self.channel.send(embed=embed)
 
-            if (today - created).total_seconds() >= 86400: pass
-            else:
+            if (today - created).total_seconds() < 86400:
                 await member.add_roles(self.sus, reason="Suspecious Account")
+
         self.invite_counter.start()
     
     @tasks.loop(count=1)

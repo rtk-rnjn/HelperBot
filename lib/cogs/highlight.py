@@ -137,11 +137,14 @@ class Hightlight(Cog):
         except Exception as e:
             print(e)
 
-    @tasks.loop(seconds=5)
+    @Cog.listener()
+    async def on_command_completion(self, ctx: Context):
+        if ctx.command.name in ['hadd', 'hdel', 'hshow', 'hblock', 'hunblock']:
+            await self.task.start()
+
+    @tasks.loop()
     async def task(self):
-        self.data = []
-        async for data in collection.find({}):
-            self.data.append(data)
+        self.data = [data async for data in collection.find({})]
 
 async def setup(bot):
     await bot.add_cog(Hightlight(bot))
