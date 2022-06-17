@@ -1,4 +1,4 @@
-import discord, asyncio
+import discord
 from core import HelperBot, Cog
 from discord.ext import tasks
 import random

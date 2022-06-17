@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import functools
-from socket import herror
 import aiohttp
 import discord
 import re
