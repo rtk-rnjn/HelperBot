@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import discord, traceback, math, random, aiohttp
+import discord, traceback, math, random
 from discord.ext import commands
 from datetime import datetime
 

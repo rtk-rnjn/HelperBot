@@ -2,6 +2,7 @@ from core import HelperBot, Cog
 from discord import Embed 
 from discord.utils import get
 from discord.ext import tasks
+from utils.config import FROM_GLOBAL_LINK, GENERAL, GLOBAL_LINK_CODE, QU_ROLE, RULES, SECTOR_17
 
 class OnJoin(Cog):
     def __init__(self, bot: HelperBot):
@@ -17,10 +18,10 @@ class OnJoin(Cog):
     async def on_member_join(self, member):
         await self.bot.wait_until_ready()
         if self.ping_channel is None:
-            self.ping_channel = self.bot.get_channel(785803322136592394)
+            self.ping_channel = self.bot.get_channel(RULES)
         await self.ping_channel.send(f"{member.mention}", delete_after=1)
-        if member.guild.id == 741614680652644382:
-            current_count = get(await member.guild.invites(), code="NEyJxM7G7f").uses
+        if member.guild.id == SECTOR_17:
+            current_count = get(await member.guild.invites(), code=GLOBAL_LINK_CODE).uses
             if (current_count - 1) == self.invite_count:
                 await member.add_roles(self.inv, reason="Joined from Global Link")
 
@@ -32,7 +33,7 @@ class OnJoin(Cog):
             embed = Embed(
                 title=
                 f"{member} welcome to {member.guild.name}",
-                description="We glad to see you here. Check out <#785803322136592394> and enjoy!",
+                description=f"We glad to see you here. Check out {self.ping_channel.mention} and enjoy!",
                 timestamp=member.created_at)
             embed.set_thumbnail(url=f"{member.display_avatar.url}")
             embed.add_field(
@@ -50,11 +51,11 @@ class OnJoin(Cog):
     @tasks.loop(count=1)
     async def invite_counter(self):
         await self.bot.wait_until_ready()
-        guild = self.bot.get_guild(741614680652644382)
-        self.invite_count = get(await guild.invites(), code="NEyJxM7G7f").uses
-        self.sus = guild.get_role(851837681688248351)
-        self.inv = guild.get_role(876780196500484117)
-        self.channel = guild.get_channel(796645162860150784)
+        guild = self.bot.get_guild(SECTOR_17)
+        self.invite_count = get(await guild.invites(), code=GLOBAL_LINK_CODE).uses
+        self.sus = guild.get_role(QU_ROLE)
+        self.inv = guild.get_role(FROM_GLOBAL_LINK)
+        self.channel = guild.get_channel(GENERAL)
 
 async def setup(bot):
     await bot.add_cog(OnJoin(bot))

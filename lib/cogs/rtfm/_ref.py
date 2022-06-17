@@ -6,10 +6,16 @@ from functools import partial
 
 # import sys
 
-import aiohttp
+import aiohttp  # type: ignore
 import discord
 from bs4 import BeautifulSoup
-from markdownify import MarkdownConverter
+from markdownify import MarkdownConverter  # type: ignore
+
+try:
+    import lxml
+    PARSER = "lxml"
+except ImportError:
+    PARSER = "html.parser"
 
 
 class DocMarkdownConverter(MarkdownConverter):
@@ -46,7 +52,7 @@ async def _process_mozilla_doc(ctx, url):
                     f"An error occurred (status code: {response.status}). Retry later."
                 )
 
-            body = BeautifulSoup(await response.text(), "lxml").find("body")
+            body = BeautifulSoup(await response.text(), PARSER).find("body")
 
     # if body.get('class')[0] == 'error':
     #     # 404
@@ -128,7 +134,7 @@ async def _git_main_ref(part, ctx, text):
                 # Website redirects to home page
                 return await ctx.send("No results")
 
-            soup = BeautifulSoup(await response.text(), "lxml")
+            soup = BeautifulSoup(await response.text(), PARSER)
             sectors = soup.find_all("div", {"class": "sect1"}, limit=3)
 
             title = sectors[0].find("p").text
@@ -170,7 +176,7 @@ async def sql_ref(ctx, text):
                     f"An error occurred (status code: {response.status}). Retry later."
                 )
 
-            body = BeautifulSoup(await response.text(), "lxml").find("body")
+            body = BeautifulSoup(await response.text(), PARSER).find("body")
             intro = body.find(
                 lambda x: x.name == "h2" and "Introduction to " in x.string
             )
@@ -212,7 +218,7 @@ async def haskell_ref(ctx, text):
                     f"An error occurred (status code: {response.status}). Retry later."
                 )
 
-            soup = BeautifulSoup(await response.text(), "lxml").find(
+            soup = BeautifulSoup(await response.text(), PARSER).find(
                 "div", id="content"
             )
 

@@ -1,11 +1,12 @@
+from __future__ import annotations
+from contextlib import suppress
+
 from core import HelperBot, Cog
-import asyncio, discord
-from random import choice
+import discord
+
 from datetime import datetime
 
-with open("data/quotes.txt") as f:
-    quotes = f.read().split('\n')
-
+from utils.config import SECTOR_17
 
 class OnMessage(Cog):
     def __init__(self, bot: HelperBot):
@@ -13,18 +14,16 @@ class OnMessage(Cog):
 
     @Cog.listener("on_message")
     async def sector_17(self, message: discord.Message):
-        if not message.guild: return
-        if message.channel.id != 836874738609553459: return
+        if getattr(message.guild, "id", None) != SECTOR_17: return
 
         created: datetime = message.author.created_at
         joined: datetime = message.author.joined_at
 
         seconds = (created - joined).total_seconds()
-        if seconds >= 86400:
-            try:
+        if seconds >= 86400 and message.author._roles.has(851837681688248351):
+            with suppress(discord.HTTPException):
                 await message.author.remove_roles(discord.Object(id=851837681688248351), reason="Account age crosses 1d")
-            except discord.Forbidden:
-                pass
+
 
 async def setup(bot):
     await bot.add_cog(OnMessage(bot))

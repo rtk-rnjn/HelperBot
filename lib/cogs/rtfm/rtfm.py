@@ -5,11 +5,11 @@ import os
 import re
 import sys
 import discord
-import aiohttp
+import aiohttp  # type: ignore
 import hashlib
 
 from random import choice
-import rapidfuzz
+import rapidfuzz  # type: ignore
 from datetime import datetime
 from hashlib import algorithms_available as algorithms
 from html import unescape
@@ -37,6 +37,12 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 with open("data/lang.txt") as f:
     languages = f.read()
+
+try:
+    import lxml
+    PARSER = "lxml"
+except ImportError:
+    PARSER = "html.parser"
 
 GITHUB_API_URL = "https://api.github.com"
 API_ROOT_RP = "https://realpython.com/search/api/v1/"
@@ -730,7 +736,7 @@ Useful to hide your syntax fails or when you forgot to print the result.""",
                         "An error occurred (status code: {response.status}). Retry later."
                     )
 
-                soup = BeautifulSoup(await response.text(), "lxml")
+                soup = BeautifulSoup(await response.text(), PARSER)
 
                 nameTag = soup.find("h2", string="NAME\n")
 

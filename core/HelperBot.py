@@ -1,12 +1,13 @@
+from __future__ import annotations
 
 from .Context import Context
 from discord.ext import commands
-import discord, traceback, jishaku
+import discord
+import traceback
+import jishaku  # type: ignore
 from utils.config import EXTENTIONS, TOKEN
-import aiohttp
+import aiohttp  # type: ignore
 
-from aiohttp import AsyncResolver, ClientSession, TCPConnector
-import socket
 import os
 
 os.environ["JISHAKU_HIDE"] = "True"
@@ -36,7 +37,7 @@ class HelperBot(commands.Bot):
         )
 
     async def process_commands(self, message: discord.Message):
-        ctx = await self.get_context(message, cls=Context or commands.Context)
+        ctx = await self.get_context(message, cls=Context)
         
         if ctx.command is None:
             # ignore if no command found
@@ -49,9 +50,7 @@ class HelperBot(commands.Bot):
                 await self.load_extension(ext)
                 print(f"[EXTENSION] {ext} was loaded successfully!")
             except Exception as e:
-                tb = traceback.format_exception(type(e), e, e.__traceback__)
-                tbe = "".join(tb) + ""
-                print(f"[WARNING] Could not load extension {ext}: {tbe}")
+                traceback.print_exc()
 
     async def on_message(self, message: discord.Message):
         if not message.guild:

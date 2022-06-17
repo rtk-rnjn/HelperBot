@@ -2,6 +2,7 @@ from __future__ import annotations
 from itertools import zip_longest
 
 from typing import TYPE_CHECKING, Any, Optional, Dict, Union, List
+from utils.config import SECTOR_17
 from utils.formats import TabularData
 
 if TYPE_CHECKING:
@@ -51,7 +52,7 @@ class Suggest(commands.Cog):
         )
 
     def cog_check(self, ctx):
-        return ctx.guild is not None and ctx.guild.id == 746337818388987967
+        return ctx.guild is not None and ctx.guild.id == SECTOR_17
 
     async def get_or_fetch_message(self, message_id: int) -> Optional[Message]:
         try:

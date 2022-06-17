@@ -116,7 +116,7 @@ class Refresh(discord.ui.View):
             bot=bot,
             label="Run again",
             style=discord.ButtonStyle.grey,
-            emoji="🔄",
+            emoji="\N{ANTICLOCKWISE DOWNWARDS AND UPWARDS OPEN CIRCLE ARROWS}",
             disabled=no_rerun,
         )
 
@@ -125,7 +125,7 @@ class Refresh(discord.ui.View):
         self.children.reverse()  # Run again first
 
     @discord.ui.button(label="Delete", style=discord.ButtonStyle.grey, emoji="🗑")
-    async def delete(self, button: discord.ui.Button, interaction: discord.Interaction):
+    async def delete(self, interaction: discord.Interaction, button: discord.ui.Button):
         message = await get_message(interaction)
 
         if message is None:

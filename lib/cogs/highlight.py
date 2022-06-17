@@ -19,6 +19,7 @@ cluster = motor.motor_asyncio.AsyncIOMotorClient(
 db = cluster["highlight"]
 collection = db["highlight"]
 
+
 class Hightlight(Cog):
     """A highlight system!"""
     def __init__(self, bot: HelperBot) -> None:
@@ -48,8 +49,8 @@ class Hightlight(Cog):
 
         To prevent abuse of the service, you can only have 10 highlight word or phrases.
         """
-        if len(phrase) not in list(range(2, 41)):
-            await ctx.send("Phrase lenght must not more than 40 or less than 2")
+        if len(phrase) not in list(range(3, 41)):
+            await ctx.send("Phrase lenght must not more than 40 or less than 3")
             return
         if data := await collection.find_one({'_id': ctx.author.id}):
             if len(data.get('word')) >= 10:
@@ -104,11 +105,13 @@ class Hightlight(Cog):
     @Cog.listener()
     async def on_message(self, message: discord.Message):
         await self.bot.wait_until_ready()
-        await asyncio.sleep(0.5)
+
         if message.author.bot:
             return
+
         if not message:
             return
+
         if message.guild is None:
             return
 
