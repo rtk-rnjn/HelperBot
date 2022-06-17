@@ -24,10 +24,10 @@ class ChannelBow(Cog):
         await self.bot.wait_until_ready()
         await self.bot.get_channel(GENERAL).edit(
             name=f"│\N{SPEECH BALLOON}│{choice(adj)}-general",
-            reason=f"Action featured by !! Ritik Ranjan [*.*]",
+            reason="Action featured by !! Ritik Ranjan [*.*]",
         )
         await self.bot.get_channel(VOICE_GENERAL).edit(
-            name=f"{choice(title)}", reason=f"Action featured by !! Ritik Ranjan [*.*]"
+            name=f"{choice(title)}", reason="Action featured by !! Ritik Ranjan [*.*]"
         )
 
 

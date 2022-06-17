@@ -169,7 +169,7 @@ class Suggest(commands.Cog):
             return
 
         if int(msg.embeds[0].footer.text.split(":")[1]) != ctx.author.id:
-            return await ctx.send(f"You don't own that 'suggestion'")
+            return await ctx.send("You don't own that 'suggestion'")
 
         await msg.delete(delay=0)
         await ctx.send("Done", delete_after=5)
