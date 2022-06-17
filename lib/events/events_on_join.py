@@ -69,5 +69,6 @@ class OnJoin(Cog):
         guild = self.bot.get_guild(SECTOR_17)
         self.invite_count = get(await guild.invites(), code=GLOBAL_LINK_CODE).uses
 
+
 async def setup(bot):
     await bot.add_cog(OnJoin(bot))
