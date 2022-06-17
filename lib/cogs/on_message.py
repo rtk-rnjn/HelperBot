@@ -8,13 +8,15 @@ from datetime import datetime
 
 from utils.config import SECTOR_17
 
+
 class OnMessage(Cog):
     def __init__(self, bot: HelperBot):
         self.bot = bot
 
     @Cog.listener("on_message")
     async def sector_17(self, message: discord.Message):
-        if getattr(message.guild, "id", None) != SECTOR_17: return
+        if getattr(message.guild, "id", None) != SECTOR_17:
+            return
 
         created: datetime = message.author.created_at
         joined: datetime = message.author.joined_at
@@ -22,7 +24,10 @@ class OnMessage(Cog):
         seconds = (created - joined).total_seconds()
         if seconds >= 86400 and message.author._roles.has(851837681688248351):
             with suppress(discord.HTTPException):
-                await message.author.remove_roles(discord.Object(id=851837681688248351), reason="Account age crosses 1d")
+                await message.author.remove_roles(
+                    discord.Object(id=851837681688248351),
+                    reason="Account age crosses 1d",
+                )
 
 
 async def setup(bot):

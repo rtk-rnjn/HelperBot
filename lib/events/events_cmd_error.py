@@ -6,40 +6,42 @@ from datetime import datetime
 
 from core import HelperBot, Context, Cog
 
-with open("data/quotes.txt", encoding='utf-8') as f:
+with open("data/quotes.txt", encoding="utf-8") as f:
     quote = f.read()
 
-quote = quote.split('\n')
+quote = quote.split("\n")
+
 
 class Cmd(Cog):
     """This category is of no use for you, ignore it."""
+
     def __init__(self, bot: HelperBot):
         self.bot = bot
-
 
     @Cog.listener()
     async def on_command_error(self, ctx: Context, error):
         # if command has local error handler, return
-        if hasattr(ctx.command, 'on_error'): return
-        
+        if hasattr(ctx.command, "on_error"):
+            return
+
         # get the original exception
-        error = getattr(error, 'original', error)
+        error = getattr(error, "original", error)
 
-        ignore = (commands.CommandNotFound, discord.Forbidden,
-                  discord.errors.NotFound)
+        ignore = (commands.CommandNotFound, discord.Forbidden, discord.errors.NotFound)
 
-        if isinstance(error, ignore): return
+        if isinstance(error, ignore):
+            return
 
         if isinstance(error, commands.BotMissingPermissions):
             missing = [
-                perm.replace('_', ' ').replace('guild', 'server').title()
+                perm.replace("_", " ").replace("guild", "server").title()
                 for perm in error.missing_perms
             ]
             if len(missing) > 2:
-                fmt = '{}, and {}'.format(", ".join(missing[:-1]), missing[-1])
+                fmt = "{}, and {}".format(", ".join(missing[:-1]), missing[-1])
             else:
-                fmt = ' and '.join(missing)
-            _message = f'{random.choice(quote)}\n\nBot Missing permissions. Please provide the following permission(s) to the bot.```\n{fmt}```'
+                fmt = " and ".join(missing)
+            _message = f"{random.choice(quote)}\n\nBot Missing permissions. Please provide the following permission(s) to the bot.```\n{fmt}```"
             return await ctx.send(_message)
 
         elif isinstance(error, commands.CommandOnCooldown):
@@ -49,36 +51,35 @@ class Cmd(Cog):
 
         elif isinstance(error, commands.MissingPermissions):
             missing = [
-                perm.replace('_', ' ').replace('guild', 'server').title()
+                perm.replace("_", " ").replace("guild", "server").title()
                 for perm in error.missing_perms
             ]
             if len(missing) > 2:
-                fmt = '{}, and {}'.format("**, **".join(missing[:-1]),
-                                          missing[-1])
+                fmt = "{}, and {}".format("**, **".join(missing[:-1]), missing[-1])
             else:
-                fmt = ' and '.join(missing)
-            _message = '{}\n\nMissing Permissions. You need the the following permission(s) to use the command.```\n{}```'.format(
-                random.choice(quote), fmt)
+                fmt = " and ".join(missing)
+            _message = "{}\n\nMissing Permissions. You need the the following permission(s) to use the command.```\n{}```".format(
+                random.choice(quote), fmt
+            )
             await ctx.send(_message)
             return
-
 
         elif isinstance(error, commands.MissingAnyRole):
             missing = [role for role in error.missing_roles]
             if len(missing) > 2:
-                fmt = '{}, and {}'.format("**, **".join(missing[:-1]),
-                                          missing[-1])
+                fmt = "{}, and {}".format("**, **".join(missing[:-1]), missing[-1])
             else:
-                fmt = ' and '.join(missing)
-            _message = '{}\n\nMissing Role. You need the the following role(s) to use the command.```\n{}```'.format(
-                random.choice(quote), fmt)
+                fmt = " and ".join(missing)
+            _message = "{}\n\nMissing Role. You need the the following role(s) to use the command.```\n{}```".format(
+                random.choice(quote), fmt
+            )
             await ctx.send(_message)
             return
 
         elif isinstance(error, commands.NoPrivateMessage):
             try:
                 await ctx.send(
-                    f'{random.choice(quote)}\n\nNo Private Message. This command cannot be used in direct messages. It can only be used in server'
+                    f"{random.choice(quote)}\n\nNo Private Message. This command cannot be used in direct messages. It can only be used in server"
                 )
             except discord.Forbidden:
                 pass
@@ -88,9 +89,9 @@ class Cmd(Cog):
             em = discord.Embed(timestamp=datetime.utcnow())
             em.set_image(url="https://i.imgur.com/oe4iK5i.gif")
             await ctx.send(
-                content=
-                f"{random.choice(quote)}\n\nNSFW Channel Required. This command will only run in NSFW marked channel. https://i.imgur.com/oe4iK5i.gif",
-                embed=em)
+                content=f"{random.choice(quote)}\n\nNSFW Channel Required. This command will only run in NSFW marked channel. https://i.imgur.com/oe4iK5i.gif",
+                embed=em,
+            )
             return
 
         elif isinstance(error, commands.NotOwner):
@@ -107,27 +108,27 @@ class Cmd(Cog):
         elif isinstance(error, commands.BadArgument):
             if isinstance(error, commands.MessageNotFound):
                 return await ctx.send(
-                    f'{random.choice(quote)}\n\nMessage Not Found. Message ID/Link you provied is either invalid or deleted!'
+                    f"{random.choice(quote)}\n\nMessage Not Found. Message ID/Link you provied is either invalid or deleted!"
                 )
             elif isinstance(error, commands.MemberNotFound):
                 return await ctx.send(
-                    f'{random.choice(quote)}\n\nMember Not Found. Member ID/Mention/Name you provided is invalid or bot can not see that Member'
+                    f"{random.choice(quote)}\n\nMember Not Found. Member ID/Mention/Name you provided is invalid or bot can not see that Member"
                 )
             elif isinstance(error, commands.UserNotFound):
                 return await ctx.send(
-                    f'{random.choice(quote)}\n\nUser Not Found. User ID/Mention/Name you provided is invalid or bot can not see that User'
+                    f"{random.choice(quote)}\n\nUser Not Found. User ID/Mention/Name you provided is invalid or bot can not see that User"
                 )
             elif isinstance(error, commands.ChannelNotFound):
                 return await ctx.send(
-                    f'{random.choice(quote)}\n\nChannel Not Found. Channel ID/Mention/Name you provided is invalid or bot can not see that Channel'
+                    f"{random.choice(quote)}\n\nChannel Not Found. Channel ID/Mention/Name you provided is invalid or bot can not see that Channel"
                 )
             elif isinstance(error, commands.RoleNotFound):
                 return await ctx.send(
-                    f'{random.choice(quote)}\n\nRole Not Found. Role ID/Mention/Name you provided is invalid or bot can not see that Role'
+                    f"{random.choice(quote)}\n\nRole Not Found. Role ID/Mention/Name you provided is invalid or bot can not see that Role"
                 )
             elif isinstance(error, commands.EmojiNotFound):
                 return await ctx.send(
-                    f'{random.choice(quote)}\n\nEmoji Not Found. Emoji ID/Name you provided is invalid or bot can not see that Emoji'
+                    f"{random.choice(quote)}\n\nEmoji Not Found. Emoji ID/Name you provided is invalid or bot can not see that Emoji"
                 )
 
         elif isinstance(error, commands.MissingRequiredArgument):
@@ -144,8 +145,12 @@ class Cmd(Cog):
             tb = traceback.format_exception(type(error), error, error.__traceback__)
             tbe = "".join(tb) + ""
             if len(tbe) < 1800:
-              await ctx.send('Copy paste this error to `!! Ritik Ranjan [*.*]#9230`\n\n```py\nIgnoring exception in command {}: {}\n```'.format(ctx.command.name, tbe))
-            
+                await ctx.send(
+                    "Copy paste this error to `!! Ritik Ranjan [*.*]#9230`\n\n```py\nIgnoring exception in command {}: {}\n```".format(
+                        ctx.command.name, tbe
+                    )
+                )
+
 
 async def setup(bot):
     await bot.add_cog(Cmd(bot))

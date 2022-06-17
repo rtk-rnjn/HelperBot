@@ -40,6 +40,7 @@ with open("data/lang.txt") as f:
 
 try:
     import lxml
+
     PARSER = "lxml"
 except ImportError:
     PARSER = "html.parser"
@@ -1573,6 +1574,7 @@ Useful to hide your syntax fails or when you forgot to print the result.""",
         wait_for_kata = await kata_view.wait()
         if wait_for_kata:
             await original_message.edit(embed=kata_embed, view=None)
+
 
 async def setup(bot: HelperBot):
     await bot.add_cog(RTFM(bot))
