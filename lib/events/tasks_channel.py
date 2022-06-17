@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from core import HelperBot, Cog
 from discord.ext import tasks
 from random import choice

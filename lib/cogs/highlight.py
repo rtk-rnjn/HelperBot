@@ -1,18 +1,15 @@
 from __future__ import annotations
 
-import os
 import re
 from typing import Optional, Union
 from discord.ext import commands, tasks
 import discord
-import motor.motor_asyncio
+import motor.motor_asyncio  # type: ignore
 from core import HelperBot, Cog, Context
-
-
-my_secret = os.environ["DB_KEY"]
+from utils.config import DB_KEY
 
 cluster = motor.motor_asyncio.AsyncIOMotorClient(
-    f"mongodb+srv://user:{str(my_secret)}@cluster0.xjask.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+    f"mongodb+srv://user:{str(DB_KEY)}@cluster0.xjask.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 )
 db = cluster["highlight"]
 collection = db["highlight"]

@@ -6,7 +6,7 @@ import discord
 
 from datetime import datetime
 
-from utils.config import SECTOR_17
+from utils.config import QU_ROLE, SECTOR_17
 
 
 class OnMessage(Cog):
@@ -22,10 +22,10 @@ class OnMessage(Cog):
         joined: datetime = message.author.joined_at
 
         seconds = (created - joined).total_seconds()
-        if seconds >= 86400 and message.author._roles.has(851837681688248351):
+        if seconds >= 86400 and message.author._roles.has(QU_ROLE):
             with suppress(discord.HTTPException):
                 await message.author.remove_roles(
-                    discord.Object(id=851837681688248351),
+                    discord.Object(id=QU_ROLE),
                     reason="Account age crosses 1d",
                 )
 

@@ -5,7 +5,7 @@ from discord.ext import commands
 import discord
 import traceback
 import jishaku  # type: ignore
-from utils.config import EXTENTIONS, TOKEN
+from utils.config import EXTENTIONS, RITIK, TOKEN
 import aiohttp  # type: ignore
 
 import os
@@ -59,7 +59,7 @@ class HelperBot(commands.Bot):
         await self.process_commands(message)
 
     async def on_message_edit(self, before: discord.Message, after: discord.Message):
-        if before.content != after.content and after.author.id == 741614468546560092:
+        if before.content != after.content and after.author.id == RITIK:
             await self.process_commands(after)
 
     async def get_prefix(self, message: discord.Message) -> str:

@@ -1,6 +1,8 @@
+from __future__ import annotations
+
 from core import HelperBot, Cog
 from discord import Embed
-from discord.utils import get
+from discord.utils import get  # type: ignore
 from discord.ext import tasks
 from utils.config import (
     FROM_GLOBAL_LINK,
@@ -17,10 +19,12 @@ class OnJoin(Cog):
         self.bot = bot
         self.invite_count = 0
         self.invite_counter.start()
-        self.sus = None
-        self.inv = None
-        self.channel = None
-        self.ping_channel = None
+
+        guild = self.bot.get_guild(SECTOR_17)
+        self.sus = guild.get_role(QU_ROLE)
+        self.inv = guild.get_role(FROM_GLOBAL_LINK)
+        self.channel = guild.get_channel(GENERAL)
+        self.ping_channel = guild.get_channel(RULES)
 
     @Cog.listener()
     async def on_member_join(self, member):
@@ -64,10 +68,6 @@ class OnJoin(Cog):
         await self.bot.wait_until_ready()
         guild = self.bot.get_guild(SECTOR_17)
         self.invite_count = get(await guild.invites(), code=GLOBAL_LINK_CODE).uses
-        self.sus = guild.get_role(QU_ROLE)
-        self.inv = guild.get_role(FROM_GLOBAL_LINK)
-        self.channel = guild.get_channel(GENERAL)
-
 
 async def setup(bot):
     await bot.add_cog(OnJoin(bot))
