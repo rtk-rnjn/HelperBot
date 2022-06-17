@@ -55,14 +55,13 @@ class Hightlight(Cog):
         if data := await collection.find_one({"_id": ctx.author.id}):
             if len(data.get("word")) >= 10:
                 return await ctx.send("Can not make more than 10", delete_after=3)
-            else:
-                await collection.update_one(
-                    {
-                        "_id": ctx.author.id,
-                    },
-                    {"$addToSet": {"word": phrase.lower()}},
-                )
-                await ctx.send("Added that word in the list.", delete_after=3)
+            await collection.update_one(
+                {
+                    "_id": ctx.author.id,
+                },
+                {"$addToSet": {"word": phrase.lower()}},
+            )
+            await ctx.send("Added that word in the list.", delete_after=3)
         else:
             await collection.insert_one(
                 {"_id": ctx.author.id, "word": [phrase.lower()]}
