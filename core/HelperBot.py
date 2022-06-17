@@ -29,11 +29,16 @@ class HelperBot(commands.Bot):
             **kwargs,
         )
         self._BotBase__cogs = commands.core._CaseInsensitiveDict()
+        self.__ready = False
 
     def run(self):
         super().run(TOKEN, reconnect=True)
 
     async def on_ready(self):
+        if not self.__ready:
+            await self.__setup_hook()
+            self.__ready = True
+
         print(f"[HelperBot] {self.user} ready to take commands")
 
     async def process_commands(self, message: discord.Message):
@@ -44,7 +49,7 @@ class HelperBot(commands.Bot):
             return
         await self.invoke(ctx)
 
-    async def setup_hook(self):
+    async def __setup_hook(self):
         for ext in EXTENTIONS:
             try:
                 await self.load_extension(ext)
