@@ -4,7 +4,10 @@ from discord.ext import tasks
 import random
 
 from utils.config import RAINBOW_ROLE, SECTOR_17, SPECIAL_RAINBOW_ROLE
+
 color = [16678812, 6670804, 13942761]
+
+
 class RainbowRole(Cog):
     def __init__(self, bot: HelperBot):
         self.bot = bot
@@ -22,10 +25,15 @@ class RainbowRole(Cog):
         if self.rain_bow_role:
             await self.rain_bow_role.edit(
                 colour=discord.Colour.random(),
-                reason="Action featured by !! Ritik Ranjan [*.*]#9230")
+                reason="Action featured by !! Ritik Ranjan [*.*]#9230",
+            )
 
         if self.not_your_role:
-            await self.not_your_role.edit(colour=random.choice(color), reason="Action featured by !! Ritik Ranjan [*.*]#9230")
+            await self.not_your_role.edit(
+                colour=random.choice(color),
+                reason="Action featured by !! Ritik Ranjan [*.*]#9230",
+            )
+
 
 async def setup(bot):
     await bot.add_cog(RainbowRole(bot))

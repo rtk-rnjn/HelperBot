@@ -6,11 +6,12 @@ import discord
 import typing
 
 
-__all__ = ("Context", )
+__all__ = ("Context",)
 
 
 class Context(commands.Context):
     """A custom implementation of commands.Context class."""
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

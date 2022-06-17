@@ -13,6 +13,7 @@ from markdownify import MarkdownConverter  # type: ignore
 
 try:
     import lxml
+
     PARSER = "lxml"
 except ImportError:
     PARSER = "html.parser"

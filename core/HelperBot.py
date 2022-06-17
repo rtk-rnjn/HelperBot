@@ -17,28 +17,28 @@ os.environ["JISHAKU_NO_DM_TRACEBACK"] = "True"
 
 class HelperBot(commands.Bot):
     def __init__(self, *args, **kwargs):
-        super().__init__(command_prefix=self.get_prefix,
-                         case_insensitive=False,
-                         intents=discord.Intents.all(),
-                         strip_after_prefix=True,
-                         activity=discord.Activity(
-                             type=discord.ActivityType.listening,
-                             name="Parrot"),
-                         status=discord.Status.idle,
-                         **kwargs)
+        super().__init__(
+            command_prefix=self.get_prefix,
+            case_insensitive=False,
+            intents=discord.Intents.all(),
+            strip_after_prefix=True,
+            activity=discord.Activity(
+                type=discord.ActivityType.listening, name="Parrot"
+            ),
+            status=discord.Status.idle,
+            **kwargs,
+        )
         self._BotBase__cogs = commands.core._CaseInsensitiveDict()
 
     def run(self):
         super().run(TOKEN, reconnect=True)
 
     async def on_ready(self):
-        print(
-            f"[HelperBot] {self.user} ready to take commands"
-        )
+        print(f"[HelperBot] {self.user} ready to take commands")
 
     async def process_commands(self, message: discord.Message):
         ctx = await self.get_context(message, cls=Context)
-        
+
         if ctx.command is None:
             # ignore if no command found
             return
@@ -57,13 +57,13 @@ class HelperBot(commands.Bot):
             return
 
         await self.process_commands(message)
-    
+
     async def on_message_edit(self, before: discord.Message, after: discord.Message):
         if before.content != after.content and after.author.id == 741614468546560092:
             await self.process_commands(after)
 
     async def get_prefix(self, message: discord.Message) -> str:
-        return commands.when_mentioned_or('H!', 'h!', '!H', '!h')(self, message)
+        return commands.when_mentioned_or("H!", "h!", "!H", "!h")(self, message)
 
     async def invoke_help_command(self, ctx: Context) -> None:
         return await ctx.send_help(ctx.command)
