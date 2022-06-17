@@ -6,7 +6,6 @@ from typing import Optional, Union
 from discord.ext import commands, tasks
 import discord
 import motor.motor_asyncio
-import asyncio
 from core import HelperBot, Cog, Context
 
 

@@ -9,7 +9,7 @@ if TYPE_CHECKING:
     from core import HelperBot
 
 from discord.ext import commands
-from discord import Message, TextChannel, User, Member
+from discord import Message, TextChannel, Member
 import discord
 import asyncio
 
