@@ -79,5 +79,4 @@ class YoutubeSearch:
         return result
 
     async def to_json(self, clear_cache=True):
-        result = json.dumps({"videos": await self._search()})
-        return result
+        return json.dumps({"videos": await self._search()})

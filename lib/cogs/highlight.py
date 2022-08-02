@@ -57,12 +57,12 @@ class Hightlight(Cog):
                 },
                 {"$addToSet": {"word": phrase.lower()}},
             )
-            await ctx.send("Added that word in the list.", delete_after=3)
         else:
             await collection.insert_one(
                 {"_id": ctx.author.id, "word": [phrase.lower()]}
             )
-            await ctx.send("Added that word in the list.", delete_after=3)
+
+        await ctx.send("Added that word in the list.", delete_after=3)
 
     @commands.command(name="hdel")
     async def hdel(self, ctx: Context, *, phrase: str):
@@ -132,18 +132,17 @@ class Hightlight(Cog):
                 "blocked", []
             ) or message.channel.id in data.get("blocked", []):
                 return
-            if message.author.id != data["_id"]:
-                if any(
-                    self.isin(content, message.content.lower())
-                    for content in data["word"]
-                ):
-                    word = self.word(data["word"], message.content.lower())
-                    embed = await self.make_embed(message, word)
-                    await self.send_embed(
-                        data["_id"],
-                        embed,
-                        content=f"In {message.channel.mention} for server `{message.guild.name}`, you were mentioned with the highlight word **{word}**",
-                    )
+            if message.author.id != data["_id"] and any(
+                self.isin(content, message.content.lower())
+                for content in data["word"]
+            ):
+                word = self.word(data["word"], message.content.lower())
+                embed = await self.make_embed(message, word)
+                await self.send_embed(
+                    data["_id"],
+                    embed,
+                    content=f"In {message.channel.mention} for server `{message.guild.name}`, you were mentioned with the highlight word **{word}**",
+                )
 
     async def make_embed(self, message, text: str) -> Optional[discord.Embed]:
         ls = []

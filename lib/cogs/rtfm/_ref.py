@@ -61,11 +61,9 @@ async def _process_mozilla_doc(ctx, url):
 
     # First tag not empty
     contents = body.find(id="wikiArticle").find(lambda x: x.name == "p" and x.text)
-    result = markdownify(contents).replace(
+    return markdownify(contents).replace(
         "(/en-US/docs", "(https://developer.mozilla.org/en-US/docs"
     )
-
-    return result
 
 
 async def html_ref(ctx, text):

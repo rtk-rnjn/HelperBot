@@ -374,10 +374,7 @@ class Suggest(commands.Cog):
             return True
 
         perms: discord.Permissions = member.guild_permissions
-        if any([perms.administrator, perms.manage_messages]):
-            return True
-
-        return False
+        return any([perms.administrator, perms.manage_messages])
 
 
 async def setup(bot: HelperBot):

@@ -361,9 +361,7 @@ class Connection:
         """
 
         def factory(cur: sqlite3.Cursor) -> Cursor:
-            if transaction:
-                return _CursorWithTransaction(self, cur)
-            return Cursor(self, cur)
+            return _CursorWithTransaction(self, cur) if transaction else Cursor(self, cur)
 
         return _ContextManagerMixin(self._queue, factory, self._conn.cursor)
 
