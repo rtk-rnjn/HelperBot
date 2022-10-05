@@ -49,20 +49,20 @@ class Hightlight(Cog):
             await ctx.send("Phrase lenght must not more than 40 or less than 3")
             return
         if data := await collection.find_one({"_id": ctx.author.id}):
-            if len(data.get("word")) >= 10:
+            if len(data.get("words")) >= 10:
                 return await ctx.send("Can not make more than 10", delete_after=3)
             await collection.update_one(
                 {
                     "_id": ctx.author.id,
                 },
-                {"$addToSet": {"word": phrase.lower()}},
+                {"$addToSet": {"words": phrase.lower()}},
             )
-            await ctx.send("Added that word in the list.", delete_after=3)
         else:
             await collection.insert_one(
-                {"_id": ctx.author.id, "word": [phrase.lower()]}
+                {"_id": ctx.author.id, "words": [phrase.lower()]}
             )
-            await ctx.send("Added that word in the list.", delete_after=3)
+
+        await ctx.send("Added that word in the list.", delete_after=3)
 
     @commands.command(name="hdel")
     async def hdel(self, ctx: Context, *, phrase: str):
@@ -74,7 +74,7 @@ class Hightlight(Cog):
         """
         if data := await collection.find_one({"_id": ctx.author.id}):
             await collection.update_one(
-                {"_id": ctx.author.id}, {"$pull": {"word": phrase.lower()}}
+                {"_id": ctx.author.id}, {"$pull": {"words": phrase.lower()}}
             )
             await ctx.send("Removed that word from list, if existed")
         else:
@@ -84,7 +84,7 @@ class Hightlight(Cog):
     async def hshow(self, ctx: Context):
         """Shows all your highlight words."""
         if data := await collection.find_one({"_id": ctx.author.id}):
-            await ctx.send(f"Your words/phrase ``{'``, ``'.join(data['word'])}``")
+            await ctx.send(f"Your words/phrase ``{'``, ``'.join(data['words'])}``")
         else:
             await ctx.send("You dont have any highlight words yet")
 
@@ -132,18 +132,14 @@ class Hightlight(Cog):
                 "blocked", []
             ) or message.channel.id in data.get("blocked", []):
                 return
-            if message.author.id != data["_id"]:
-                if any(
-                    self.isin(content, message.content.lower())
-                    for content in data["word"]
-                ):
-                    word = self.word(data["word"], message.content.lower())
-                    embed = await self.make_embed(message, word)
-                    await self.send_embed(
-                        data["_id"],
-                        embed,
-                        content=f"In {message.channel.mention} for server `{message.guild.name}`, you were mentioned with the highlight word **{word}**",
-                    )
+            if message.author.id != data["_id"] and any(self.isin(content, message.content.lower()) for content in data["words"]):
+                word = self.word(data["words"], message.content.lower())
+                embed = await self.make_embed(message, word)
+                await self.send_embed(
+                    data["_id"],
+                    embed,
+                    content=f"In {message.channel.mention} for server `{message.guild.name}`, you were mentioned with the highlight word **{word}**",
+                )
 
     async def make_embed(self, message, text: str) -> Optional[discord.Embed]:
         ls = []
