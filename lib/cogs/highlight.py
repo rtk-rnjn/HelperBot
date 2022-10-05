@@ -132,7 +132,9 @@ class Hightlight(Cog):
                 "blocked", []
             ) or message.channel.id in data.get("blocked", []):
                 return
-            if message.author.id != data["_id"] and any(self.isin(content, message.content.lower()) for content in data["words"]):
+            if message.author.id != data["_id"] and any(
+                self.isin(content, message.content.lower()) for content in data["words"]
+            ):
                 word = self.word(data["words"], message.content.lower())
                 embed = await self.make_embed(message, word)
                 await self.send_embed(
